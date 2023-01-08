@@ -73,9 +73,10 @@ function Clicker() {
 
     // Game variables
 
-    function initializeFromStorage(item, initialValue, type) {
+    function initializeFromStorage(item, initialValue) {
         return useState(() => {
             const storedValue = localStorage.getItem(item);
+            console.log(initialValue, typeof initialValue)
             if (storedValue) {
               if (storedValue.includes('.')) {
                 // If the stored value is a float, parse it into a float
@@ -91,6 +92,15 @@ function Clicker() {
           });
     }
 
+    function initializeObjectFromStorage(item, initialValue) {
+        return useState(() => {
+            const storedValue = localStorage.getItem(item);
+            console.log(storedValue)
+            return JSON.parse(storedValue)
+
+        })
+    }
+
     const [elapsedTime, setElapsedTime] = initializeFromStorage('elapsedTime', 0)
     const [coins, setCoins] = initializeFromStorage('coins', 0)
     const [coinsPerSec, setCoinsPerSec] = initializeFromStorage('coinsPerSec', 0)
@@ -104,7 +114,7 @@ function Clicker() {
     const [cityLevel, setCityLevel] = initializeFromStorage('cityLevel', 0)    
     const [highestCity, setHighestCity] = initializeFromStorage('city', cities[cityLevel])
     const [selectedCity, setSelectedCity] = useState(0);
-    const [items, setItems] = initializeFromStorage('items', [])
+    const [items, setItems] = initializeObjectFromStorage('items', [])
 
 
     function getAdjustedPrice(baseCost, count) {
@@ -162,7 +172,13 @@ function Clicker() {
         buildingCount,
         buildingPrice,
         cityLevel,
-    highestCity,])
+        highestCity,
+])
+
+useEffect(() => {
+    localStorage.setItem('items', JSON.stringify(items))
+}, [items])
+
 
     function clearLocalStorage() {
         var proceed = confirm("Are you sure you want to reset your save?");
