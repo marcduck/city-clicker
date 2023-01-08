@@ -55,7 +55,7 @@ function Shop({selectedCity, coins, setCoins, cities, items, setItems}) {
             <div className="shopkeeper flat-outline w-max gap-2 p-2">
                 <img 
                     className='h-40 md:h-60 object-cover' 
-                    // src={`/img/clicker/shop/${shop.shopkeeper.img}.png`} 
+                    // src={`/assets/img/clicker/shop/${shop.shopkeeper.img}.png`} 
                     alt={shop.shopkeeper.name}
                     title={shop.shopkeeper.description}
                 />
