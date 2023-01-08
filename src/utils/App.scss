@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+// Blob animation
+@layer utilities {
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+}
+
+:root {
+  --background-color-dark: #1568a7;
+  --background-color-light: #033861;
+  --color-white: #f3f7f3;
+  --color-black: #0c0c09;
+  --color-grey-1: #6a6c77;
+  --color-grey-2: #a2a4ac;
+  --color-green-light: #8fb7a2;
+  --color-green-dark: #04724d;
+  --color-blue-light: #d2dcf5;
+  --color-blue-light-2: #b8c3e0;
+  --color-grey-transparent-1: rgba(97,108,119,0.6235294117647059);
+  --font-sans: "Karla", sans-serif;
+  --font-size-tiny: 0.7rem;
+  --font-size-sm: 1rem;
+  --font-size-med: 1.2rem;
+  --font-size-large: 1.6rem;
+  --font-size-big: 2rem;
+  --font-size-huge: 4rem;
+  --margin-left-med: 5rem;
+  --animation-time-tiny: 200ms;
+  --animation-time-short: 500ms;
+  --animation-time-med: 1s;
+  --box-shadow-small: rgba(99,99,99,0.2) 0px 2px 8px 0px
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-sans);
+}
+
+
+
+
+// Tailwind combos
+
+.link {
+  @apply underline text-blue-600 hover:text-blue-800;
+}
+
+section {
+  @apply px-6 py-8 md:px-16 md:py-16;
+}
+
+.highlight {
+  @apply text-xs whitespace-nowrap md:text-sm px-2 py-1 bg-slate-300 hover:bg-slate-400;
+}
+
+.button-physical {
+  @apply border-b-4 text-white py-2 px-4 rounded-md shadow-md 
+  active:translate-y-px 
+  active:shadow-sm
+  active:border-b-2
+  active:mb-0.5
+  ;
+}
+
+
+.flat-outline {
+  @apply border-slate-400 border ;
+}
+
+.outlined-box {
+  @apply flat-outline p-4 sm:p-6 gap-1 justify-center flex flex-col bg-slate-100 shadow-lg;
+}
+
+
+Tab {
+  @apply bg-slate-100;
+}
