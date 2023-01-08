@@ -213,9 +213,9 @@ function Clicker() {
                     <div>{`Cash: `} <span  className='font-semibold'>{cents(coins)}</span></div>
                     <Stat children={`Clicking power: ${cents(clickAmount)}`} />
                     <Stat children={`Income per sec: ${cents(coinsPerSec)}/s`} />
-                    <Stat children={`Elapsed time: ${elapsedTime}s`} />
+                    {/* <Stat children={`Elapsed time: ${elapsedTime}s`} /> */}
                     <br />
-                    <Stat children={`City level: ${cityLevel}`} />
+                    {/* <Stat children={`City level: ${cityLevel}`} /> */}
                     <div className=''>Buildings: {buildingCount}</div>
                     <div className=''>Upgrades: {upgradeCount}</div>
                     <br />
