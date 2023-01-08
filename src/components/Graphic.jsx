@@ -51,7 +51,7 @@ function Graphic({cityLevel, buildingCount, cities, selectedCity, setSelectedCit
                         <div className='outlined-box'>
                             <img 
                                 className='h-40 md:h-60 object-cover' 
-                                src={`./assets/img/clicker/${c.img}.jpg`} 
+                                src={`assets/img/clicker/${c.img}.jpg`} 
                                 alt={c.name}
                             />
                             <div className="flex justify-between items-center -mb-3">
