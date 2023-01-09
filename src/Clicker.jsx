@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+
 import Graphic from './components/Graphic'
 import Shop from './components/Shop'
 import Stat from './components/Stat'
@@ -45,6 +46,9 @@ export function canAfford(coins, price) {
 }
 
 export function getFlagEmoji(countryCode) {
+    // SVG flag
+    // return <Flag code={countryCode} />
+    // Emoji flag
     return countryCode.toUpperCase().replace(/./g, char => 
         String.fromCodePoint(127397 + char.charCodeAt())
     );

@@ -49,7 +49,7 @@ function Graphic({cityLevel, buildingCount, cities, selectedCity, setSelectedCit
                         let titleStr = `${nextBuildingsRequired} buildings required`
                         // Display the cities that are cityLevel or lower
                         if (i <= cityLevel) {
-                            return getTab(`${c.name} ${getFlagEmoji(c.country)}`, false, null, c.name)
+                            return getTab(<div>{c.name} {getFlagEmoji(c.country)}</div>, false, null, c.name)
                         }
                         // Show ??? for the city one level ahead
                         if (i == cityLevel+1) {
@@ -66,7 +66,7 @@ function Graphic({cityLevel, buildingCount, cities, selectedCity, setSelectedCit
                     return <Tab.Panel key={c.name}>
                         <div className='plain-box'>
                             <img 
-                                className='h-40 md:h-60 object-cover' 
+                                className='h-40 md:h-60 object-cover shadow-sm flat-outline' 
                                 src={`assets/img/clicker/${c.img}.jpg`} 
                                 alt={c.name}
                             />

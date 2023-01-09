@@ -45,6 +45,7 @@ export const shops   = [
     shopkeeper: {
       name: "Samantha Kim",
       age: 28,
+      img: 'ohio1',
       occupation: "Shopkeeper and Architectural Designer",
       description: "Samantha is a driven and talented young designer with a love for all things building and construction. She is always happy to help customers find the perfect tools and supplies for their projects.",
     },
