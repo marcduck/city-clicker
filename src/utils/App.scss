@@ -64,7 +64,8 @@ section {
 }
 
 .button-physical {
-  @apply border-b-4 text-white py-2 px-4 rounded-md shadow-md 
+  @apply flex items-center justify-center
+  border-b-4 text-white py-2 px-4 rounded-md shadow-md 
   active:translate-y-px 
   active:shadow-sm
   active:border-b-2
@@ -72,16 +73,14 @@ section {
   ;
 }
 
-
 .flat-outline {
   @apply border-slate-400 border ;
 }
 
-.outlined-box {
-  @apply flat-outline p-4 sm:p-6 gap-1 justify-center flex flex-col bg-slate-100 shadow-lg;
+.plain-box {
+  @apply p-4 sm:p-6 gap-1 justify-center flex flex-col bg-slate-100;
 }
 
-
-Tab {
-  @apply bg-slate-100;
+.outlined-box {
+  @apply flat-outline plain-box shadow-lg;
 }

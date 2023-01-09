@@ -4,11 +4,12 @@ export const shops   = [
     name: "Lucerne's Best",
     slogan: "Find everything you need and more!",
     shopkeeper: {
-      name: "Emma Schneider",
-      age: 22,
+      name: "Maximillian von Holstein",
+      age: 52,
       img: "swiss1",
       occupation: "Shopkeeper",
-      description: "Emma is a bubbly young woman with long blonde hair and a friendly smile. She takes pride in her shop and loves to chat with customers about all of the unique items she has for sale.",
+      physicalDescription: "Maximillian is a tall, stately man with salt-and-pepper hair and a well-trimmed beard. He has a regal bearing and carries himself with confidence and poise.",
+      description: "Maximillian comes from a long line of successful merchants and takes great pride in the quality and exclusivity of the items he sells in his shop. He is known for his impeccable taste and attention to detail."
     },
     items: [
       {
@@ -81,6 +82,7 @@ export const shops   = [
     shopkeeper: {
       name: "Hans Muller",
       age: 45,
+      img: "bonn1",
       occupation: "Shopkeeper",
       physicalDescription: "Hans is a tall, handsome man with short brown hair and piercing blue eyes. He is always impeccably dressed and takes great pride in his shop and its offerings.",
       description: "Hans is a no-nonsense businessman with a keen eye for quality. He values customer satisfaction above all else and is always happy to help customers find exactly what they need.",
@@ -119,6 +121,7 @@ export const shops   = [
     shopkeeper: {
       name: "Liang Chen",
       age: 37,
+      img: "suzhou1",
       occupation: "Shopkeeper and Landscape Architect",
       physicalDescription: "Liang is a petite and slender woman with long black hair and piercing brown eyes. She has a warm and welcoming demeanor, and always has a smile on her face.",
       description: "Liang is a talented landscape architect with a passion for all things botanical. She loves to share her knowledge and expertise with customers, and is always happy to help them find the perfect plants and gardening supplies.",

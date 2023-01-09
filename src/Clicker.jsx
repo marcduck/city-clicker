@@ -4,6 +4,7 @@ import Shop from './components/Shop'
 import Stat from './components/Stat'
 import TextButton from './components/TextButton'
 import TagToPrompt from './components/TagToPrompt'
+import ShopWindow from './components/ShopWindow'
 
 
 const SectionHeading = ({ children }) => <h2 className='text-4xl font-bold mb-4'>{children}</h2>
@@ -49,6 +50,10 @@ export function getFlagEmoji(countryCode) {
     );
 }
 
+export function getNextArrayItem(array, index) {
+    return (index + 1 < array.length) ? array[index + 1] : array[array.length - 1]
+}
+
 
 // ---
 // Main App
@@ -76,7 +81,7 @@ function Clicker() {
     function initializeFromStorage(item, initialValue) {
         return useState(() => {
             const storedValue = localStorage.getItem(item);
-            console.log(initialValue, typeof initialValue)
+            console.log(item, initialValue, typeof initialValue)
             if (storedValue) {
               if (storedValue.includes('.')) {
                 // If the stored value is a float, parse it into a float
@@ -94,9 +99,8 @@ function Clicker() {
 
     function initializeObjectFromStorage(item, initialValue) {
         return useState(() => {
-            const storedValue = localStorage.getItem(item);
-            console.log(storedValue)
-            return JSON.parse(storedValue)
+            const storedValue = localStorage.getItem(item) ? JSON.parse(localStorage.getItem(item)) : initialValue
+            return storedValue
 
         })
     }
@@ -112,7 +116,7 @@ function Clicker() {
     const [buildingCount, setBuildingCount] = initializeFromStorage('buildingCount', 0)
     const [buildingPrice, setBuildingPrice] = initializeFromStorage('buildingPrice', baseCosts.building)
     const [cityLevel, setCityLevel] = initializeFromStorage('cityLevel', 0)    
-    const [highestCity, setHighestCity] = initializeFromStorage('city', cities[cityLevel])
+    const [shopStatus, setShopStatus] = initializeFromStorage('shopStatus', 1)    
     const [selectedCity, setSelectedCity] = useState(0);
     const [items, setItems] = initializeObjectFromStorage('items', [])
 
@@ -137,11 +141,11 @@ function Clicker() {
 
     // City level / city unlock
     useEffect(() => { 
-        if (cityLevel < cities.length && cities[cityLevel + 1].buildingsRequired === buildingCount) {
-            console.log(`New city unlocked: ${highestCity.name}! City level: ${cityLevel}`)
+        let nextCityBuildingsRequired = cities[Math.min(cityLevel+1, cities.length)].buildingsRequired
+        if (cityLevel < cities.length && nextCityBuildingsRequired === buildingCount) {
+            console.log(`New city unlocked: ${cities[cityLevel].name}! City level: ${cityLevel}`)
             setCityLevel(cityLevel => cityLevel+1)
         }
-
     }, [buildingCount])
 
 
@@ -159,7 +163,7 @@ function Clicker() {
         localStorage.setItem('buildingCount', buildingCount)
         localStorage.setItem('buildingPrice', buildingPrice)
         localStorage.setItem('cityLevel', cityLevel)
-        localStorage.setItem('city', highestCity)
+        localStorage.setItem('shopStatus', shopStatus)
         }, 
         [elapsedTime,
         coins,
@@ -172,7 +176,7 @@ function Clicker() {
         buildingCount,
         buildingPrice,
         cityLevel,
-        highestCity,
+        shopStatus,
 ])
 
 useEffect(() => {
@@ -238,10 +242,10 @@ useEffect(() => {
                     <Stat children={`Items: ${items.map(i => {return i.emoji+''})}`} />
                 </div>
             </div>
-            <div className="graphic order-first md:order-none">
+            <div className="graphic order-first md:order-none flat-outline shadow-lg">
                 <Graphic 
                     cityLevel={cityLevel}
-                    highestCity={highestCity}
+                    highestCity={cities[cityLevel]}
                     buildingCount={buildingCount} 
                     cities={cities}
                     selectedCity={selectedCity}
@@ -250,7 +254,7 @@ useEffect(() => {
             </div>
 
             <div className='buttons'>
-                <div className='flex gap-0 sm:gap-6 '>
+                <div className='text-center grid-cols-3 grid border-slate-400 border md:border-none md:gap-6'>
                     <TextButton 
                         text='Collect' 
                         label={`Collect ${cents(clickAmount)}`} 
@@ -270,7 +274,7 @@ useEffect(() => {
                     />
                     <TextButton 
                         text='Upgrade' 
-                        label={`Gain +${cents(upgradeStrength)} per click`} 
+                        label={`Gain +${cents(upgradeStrength)}/click`} 
                         func={buyUpgrade} 
                         color={buttonColors.upgrade} 
                         price={upgradePrice}
@@ -284,13 +288,14 @@ useEffect(() => {
 
             <div className="shop">
                 <div className='outlined-box'>
-                    <Shop
+                    <ShopWindow
                         coins={coins}
                         setCoins={setCoins}
                         selectedCity={selectedCity}
                         cities={cities}
                         items={items}
                         setItems={setItems}
+                        shopStatus={shopStatus}
                     />
                 </div>
             </div>

@@ -15,7 +15,9 @@ function Shop({selectedCity, coins, setCoins, cities, items, setItems}) {
         return canAfford(coins, price) ? 'text-emerald-700' : 'text-slate-400'
     }
     function isAffordableDiv(price) {
-        return canAfford(coins, price) ? 'bg-slate-200 border border-emerald-700 hover:cursor-pointer' : 'bg-neutral-300 border border-neutral-400'
+        return canAfford(coins, price) 
+            ? 'bg-slate-200 border border-emerald-700 hover:cursor-pointer' // Can afford
+            : 'bg-neutral-300 border border-neutral-400'                    // Can't afford
     }
 
     function listShopItems() {
@@ -23,8 +25,11 @@ function Shop({selectedCity, coins, setCoins, cities, items, setItems}) {
             return (
                 // Individual shop items, click to buy
                 <div 
-                    className={`flex-row sm:flex-col  items-center justify-between flex text-center
-                     gap-1 p-1 ${isAffordableDiv(item.price)}`}
+                    className={`
+                        flex-row sm:flex-col  
+                        items-center justify-between flex text-center
+                        gap-0.5 sm:gap-1 p-1 
+                        ${isAffordableDiv(item.price)}`}
                     title={item.description} 
                     key={item.name}
                     onClick={() => buyItem(item)}
@@ -52,10 +57,13 @@ function Shop({selectedCity, coins, setCoins, cities, items, setItems}) {
                     {listShopItems()}
                 </div>
             </div>
-            <div className="shopkeeper flat-outline w-max gap-2 p-2">
+            <div className="shopkeeper ">
+                {/* <div className="info flat-outline">
+                    <div className="text-xs font-semibold">{shop.shopkeeper.name}</div>
+                </div> */}
                 <img 
-                    className='h-40 md:h-60 object-cover' 
-                    // src={`./assets/img/clicker/shop/${shop.shopkeeper.img}.png`} 
+                    className='h-40 md:h-60 w-full object-cover' 
+                    src={`./assets/img/clicker/shop/${shop.shopkeeper.img}.png`} 
                     alt={shop.shopkeeper.name}
                     title={shop.shopkeeper.description}
                 />

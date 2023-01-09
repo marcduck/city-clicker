@@ -1,19 +1,34 @@
 import React from 'react'
-import { useEffect } from 'react'
-import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
-import 'react-tabs/style/react-tabs.css'
+import { useEffect, Fragment } from 'react'
+import { Tab } from '@headlessui/react'
 
-import { getFlagEmoji } from '../Clicker'
+function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
+  }
+
+import { getFlagEmoji, getNextArrayItem } from '../Clicker'
+
+function getTab(label, disabled, title=null, cityName) {
+    return (
+        <Tab 
+            className={({ selected }) => classNames(
+                'w-full py-1.5 md:py-2.5 text-xs md:text-sm font-semibold text-slate-900',
+                selected
+                    ? 'bg-white flat-outline shadow outline-none'
+                    : 'text-slate-600 border  border-slate-100 disabled:text-slate-400')}
+            key={cityName}
+            disabled={disabled}
+            title={title}
+        >
+            {label}            
+        </Tab>)
+}
 
 
 function Graphic({cityLevel, buildingCount, cities, selectedCity, setSelectedCity}) {
 
     function handleTabChange(index) {
       setSelectedCity(index);
-    }
-
-    function getNextArrayItem(array, index) {
-        return (index + 1 < array.length) ? array[index + 1] : array[array.length - 1]
     }
 
     function getGraphicSubtitle(i) {
@@ -26,29 +41,30 @@ function Graphic({cityLevel, buildingCount, cities, selectedCity, setSelectedCit
     }
     
     return (
-        <Tabs selectedIndex={selectedCity} onSelect={handleTabChange}>
-            <TabList className='-mb-1/2 select-none'>
+        <div className=''>
+            <Tab.Group onChange={(i) => handleTabChange(i)} >
+                <Tab.List className="border-b border-slate-400 select-none flex space-x-1 p-2 bg-slate-100">
+                    {cities.map((c, i) => {
+                        let nextBuildingsRequired = (i - 1 >= 0) ? cities[i].buildingsRequired : 0
+                        let titleStr = `${nextBuildingsRequired} buildings required`
+                        // Display the cities that are cityLevel or lower
+                        if (i <= cityLevel) {
+                            return getTab(`${c.name} ${getFlagEmoji(c.country)}`, false, null, c.name)
+                        }
+                        // Show ??? for the city one level ahead
+                        if (i == cityLevel+1) {
+                            return getTab(c.name, true, titleStr, c.name)
+                        }
+                        else {
+                            return getTab('???', true, null , c.name)
+                        }
+                    })}
+                    
+                </Tab.List>
+                <Tab.Panels>
                 {cities.map((c, i) => {
-                    let nextBuildingsRequired = (i - 1 >= 0) ? cities[i].buildingsRequired : 0
-                    let titleStr = `${nextBuildingsRequired} buildings required`
-                    // Display the cities that are cityLevel or lower
-                    if (i <= cityLevel) {
-                        return <Tab key={c.name} title={titleStr}>{c.name} {getFlagEmoji(c.country)}</Tab>
-                    }
-                    // Show ??? for the city one level ahead
-                    if (i == cityLevel+1) {
-                        return <Tab key={c.name} disabled title={titleStr}>{c.name}</Tab>
-                    }
-                    else {
-                        return <Tab key={c.name} disabled title={titleStr}>???</Tab>
-                    }
-                })}
-                
-            </TabList>
-
-                {cities.map((c, i) => {
-                    return <TabPanel key={c.name}>
-                        <div className='outlined-box'>
+                    return <Tab.Panel key={c.name}>
+                        <div className='plain-box'>
                             <img 
                                 className='h-40 md:h-60 object-cover' 
                                 src={`assets/img/clicker/${c.img}.jpg`} 
@@ -60,9 +76,11 @@ function Graphic({cityLevel, buildingCount, cities, selectedCity, setSelectedCit
                                 </div>
                             </div>
                         </div>
-                    </TabPanel>
+                    </Tab.Panel>
                 })}  
-        </Tabs>
+                </Tab.Panels>
+            </Tab.Group>
+        </div>
     )
 }
 
