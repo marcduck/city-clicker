@@ -67,7 +67,7 @@ function Shop({selectedCity, coins, setCoins, cities, items, setItems}) {
 
     function ModalContent() {
         // Shopkeeper dialogue window
-        return <div className='grid grid-cols-2 gap-6'>
+        return <div className='grid grid-cols-2 gap-6 px-3 md:px-8 py-6 md:py-16'>
             <div className="flat-outline"></div>
             <div className="flex flex-col items-center gap-3">
                 <ShopImage />

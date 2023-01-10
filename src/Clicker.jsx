@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
+import 'flowbite'
+import { gsap } from "gsap"
 
+// Components
 import Graphic from './components/Graphic'
 import Shop from './components/Shop'
 import Stat from './components/Stat'
 import TextButton from './components/TextButton'
 import TagToPrompt from './components/TagToPrompt'
 import ShopWindow from './components/ShopWindow'
+import Toast from './components/Toast'
 
 
 const SectionHeading = ({ children }) => <h2 className='text-4xl font-bold mb-4'>{children}</h2>
@@ -124,6 +128,12 @@ function Clicker() {
     const [selectedCity, setSelectedCity] = useState(0);
     const [items, setItems] = initializeObjectFromStorage('items', [])
 
+    
+    // Animate toast
+    const [showToast, setShowToast] = useState(false)
+    const [toastMessage, setToastMessage] = useState("")
+
+
 
     function getAdjustedPrice(baseCost, count) {
         return (baseCost * Math.pow(M, count))
@@ -146,8 +156,9 @@ function Clicker() {
     // City level / city unlock
     useEffect(() => { 
         let nextCityBuildingsRequired = cities[Math.min(cityLevel+1, cities.length)].buildingsRequired
-        if (cityLevel < cities.length && nextCityBuildingsRequired === buildingCount) {
-            console.log(`New city unlocked: ${cities[cityLevel].name}! City level: ${cityLevel}`)
+        if (cityLevel+1 < cities.length && nextCityBuildingsRequired === buildingCount) {
+            setToastMessage(`New city unlocked: ${cities[cityLevel+1].name}!`)
+            setShowToast(true)
             setCityLevel(cityLevel => cityLevel+1)
         }
     }, [buildingCount])
@@ -231,6 +242,13 @@ useEffect(() => {
             <SectionHeading>City Clicker</SectionHeading>
             <div className="grid interface grid-cols-1 gap-6 lg:grid-cols-2">
 
+            {/* Toast message - New city notification */}
+            <Toast 
+                setShowToast={setShowToast} 
+                showToast={showToast} 
+                toastMessage={toastMessage} 
+            />
+
             <div className="stats outlined-box">
                 <h3 className='text-2xl font-semibold'>Stats:</h3>
                 <div className="grid">
@@ -305,9 +323,10 @@ useEffect(() => {
             </div>
             </div>
             <div className="bottom gap-4 flex">
-                {/* <button className='bg-slate-400 py-0.5 px-1.5' onClick={() => window.localStorage.clear()}>Clear save</button> */}
-                {/* <button className='bg-slate-400 py-0.5 px-1.5' onClick={() => setCoins(coins + 1_000_000)}>Add money</button> */}
-                {/* <TagToPrompt /> */}
+                <button className='bg-slate-400 py-0.5 px-1.5' onClick={() => window.localStorage.clear()}>Clear save</button>
+                <button className='bg-slate-400 py-0.5 px-1.5' onClick={() => setCoins(coins + 1_000_000)}>Add money</button>
+                <button className='bg-slate-400 py-0.5 px-1.5' onClick={() => {setShowToast(true), setToastMessage(`New city unlocked: ${cities[cityLevel].name}!`)}}>Show toast</button>
+                <TagToPrompt />
             </div>
 
 
