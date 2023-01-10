@@ -36,6 +36,7 @@ function Shop({selectedCity, coins, setCoins, cities, items, setItems}) {
                 // Individual shop items, click to buy
                 <div 
                     className={`
+                        select-none 
                         flex-row sm:flex-col  
                         items-center justify-between flex text-center
                         gap-0.5 sm:gap-1 p-1 
@@ -44,9 +45,9 @@ function Shop({selectedCity, coins, setCoins, cities, items, setItems}) {
                     key={item.name}
                     onClick={() => buyItem(item)}
                 >
-                    <div className={`font-semibold text-xs ${isAffordableText(item.price)}`}>{item.name}</div>
                     <div className={`order-first md:order-none ${!canAfford(coins, item.price) && 'grayscale' }`} >{item.emoji}</div>
-                    <div className={`text-xs font-mono ${isAffordableText(item.price)}`}>{cents(item.price)}</div>
+                    <div className={`font-semibold flex-grow-0 text-xxs sm:text-xs ${isAffordableText(item.price)}`}>{item.name}</div>
+                    <div className={`text-xxs font-mono ${isAffordableText(item.price)}`}>{cents(item.price)}</div>
                 </div>
             )
         })
@@ -65,17 +66,27 @@ function Shop({selectedCity, coins, setCoins, cities, items, setItems}) {
         alt={shop.shopkeeper.name}
     />}
 
+    function Dialogue({ shopkeeper }) {
+        return (
+            <div className=''>
+                Dialogue with {shopkeeper.name}
+            </div>
+        )
+    }
+
     function ModalContent() {
         // Shopkeeper dialogue window
-        return <div className='grid grid-cols-2 gap-6 px-3 md:px-8 py-6 md:py-16'>
-            <div className="flat-outline"></div>
+        return <div className='grid grid-cols-1 md:grid-cols-2 gap-6 px-3 md:px-8 py-6 md:py-16'>
             <div className="flex flex-col items-center gap-3">
                 <ShopImage />
-                <div className="flex gap-2 items-center ">
+                <div className="flex gap-2 items-center">
                     <div className="font-bold">{shop.shopkeeper.name}</div>
                     <div className="text-xs ">({shop.shopkeeper.age})</div>
                 </div>
                 <div className="text-sm text-justify max-w-sm">{shop.shopkeeper.description || shop.shopkeeper.personalDescription}</div>
+            </div>
+            <div className="flat-outline  order-second md:order-first">
+                <Dialogue shopkeeper={shop.shopkeeper} />
             </div>
         </div>
     }

@@ -17,12 +17,12 @@ const Modal = ({ modalContent, closeModal, isModalOpen  }) => {
       {isModalOpen && (
         <div 
           onClick={closeModal} 
-          className={`fixed top-0 left-0 w-full h-full 
+          className={`fixed top-0 left-0 w-full h-full
             bg-black bg-opacity-50 flex items-center justify-center
           `}>
           <div 
             onClick={e => e.stopPropagation()} 
-            className={`
+            className={` m-4
               relative bg-slate-100 border border-slate-400 
               p-4 `}
           >
