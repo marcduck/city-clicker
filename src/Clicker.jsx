@@ -323,10 +323,10 @@ useEffect(() => {
             </div>
             </div>
             <div className="bottom gap-4 flex">
-                <button className='bg-slate-400 py-0.5 px-1.5' onClick={() => window.localStorage.clear()}>Clear save</button>
+                {/* <button className='bg-slate-400 py-0.5 px-1.5' onClick={() => window.localStorage.clear()}>Clear save</button>
                 <button className='bg-slate-400 py-0.5 px-1.5' onClick={() => setCoins(coins + 1_000_000)}>Add money</button>
                 <button className='bg-slate-400 py-0.5 px-1.5' onClick={() => {setShowToast(true), setToastMessage(`New city unlocked: ${cities[cityLevel].name}!`)}}>Show toast</button>
-                <TagToPrompt />
+                <TagToPrompt /> */}
             </div>
 
 
