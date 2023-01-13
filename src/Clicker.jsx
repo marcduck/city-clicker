@@ -28,11 +28,11 @@ let baseCosts = {
 
 let cities = [
     {name: 'Lucerne', img: 'city-swiss', buildingsRequired: 0, country: 'CH'},
-    {name: 'Columbus', img: 'city-ohio', buildingsRequired: 10, country: 'US'},
-    {name: 'Bonn', img: 'city-bonn', buildingsRequired: 20, country: 'DE'},
-    {name: 'Suzhou', img: 'city-suzhou', buildingsRequired: 30, country: 'CN'},
-    {name: 'Lima', img: 'city-lima', buildingsRequired: 40, country: 'PE'},
-    {name: 'Flores', img: 'city-flores', buildingsRequired: 50, country: 'GT'},
+    {name: 'Columbus', img: 'city-ohio', buildingsRequired: 15, country: 'US'},
+    {name: 'Bonn', img: 'city-bonn', buildingsRequired: 50, country: 'DE'},
+    {name: 'Suzhou', img: 'city-suzhou', buildingsRequired: 75, country: 'CN'},
+    {name: 'Lima', img: 'city-lima', buildingsRequired: 110, country: 'PE'},
+    {name: 'Flores', img: 'city-flores', buildingsRequired: 200, country: 'GT'},
 ]
 
 console.log(cities)
@@ -325,7 +325,7 @@ useEffect(() => {
             </div>
             <div className="bottom gap-4 flex">
                 {/* <button className='bg-slate-400 py-0.5 px-1.5' onClick={() => window.localStorage.clear()}>Clear save</button> */}
-                <button className='bg-slate-400 py-0.5 px-1.5' onClick={() => setCoins(coins + 1_000_000)}>Add money</button>
+                {/* <button className='bg-slate-400 py-0.5 px-1.5' onClick={() => setCoins(coins + 1_000_000)}>Add money</button> */}
                 {/* <button className='bg-slate-400 py-0.5 px-1.5' onClick={() => {setShowToast(true), setToastMessage(`New city unlocked: ${cities[cityLevel].name}!`)}}>Show toast</button> */}
                 {/* <TagToPrompt /> */}
             </div>
