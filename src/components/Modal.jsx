@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { riseUp } from '../utils/animations';
 
 const Modal = ({ modalContent, closeModal, isModalOpen  }) => {
 
@@ -12,6 +13,10 @@ const Modal = ({ modalContent, closeModal, isModalOpen  }) => {
   return () => window.removeEventListener('keydown', close)
   },[])
 
+  const modalRef = useRef(null)
+  riseUp(isModalOpen, modalRef)
+
+
   return (
     <>
       {isModalOpen && (
@@ -21,6 +26,7 @@ const Modal = ({ modalContent, closeModal, isModalOpen  }) => {
             bg-black bg-opacity-50 flex items-center justify-center
           `}>
           <div 
+            ref={modalRef}
             onClick={e => e.stopPropagation()} 
             className={` m-4
               relative bg-slate-100 border border-slate-400 

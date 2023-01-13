@@ -9,3 +9,16 @@ export function bounceInAndOut(condition, ref) {
             : gsap.to(ref.current, {y: 200, autoAlpha: 0 })          
     }, [condition]);
 }
+
+export function riseUp(condition, ref) {
+    useEffect(() => {
+        gsap.fromTo(ref.current, {y: 50, autoAlpha: 0}, { duration: 0.2, visibility: 'visible', y: 0, autoAlpha: 1 })
+    }, [condition]);
+}
+
+export function drawText(condition, ref, text) {
+    useEffect(() => {
+        gsap.to(ref, {duration: 2, text: text, ease: "none"});
+    }, [condition]);
+}
+

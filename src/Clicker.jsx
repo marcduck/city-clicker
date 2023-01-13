@@ -127,7 +127,14 @@ function Clicker() {
     const [shopStatus, setShopStatus] = initializeFromStorage('shopStatus', 1)    
     const [selectedCity, setSelectedCity] = useState(0);
     const [items, setItems] = initializeObjectFromStorage('items', [])
+    const [clickMultiplier, setClickMultiplier] = initializeFromStorage('clickMultiplier', 1);
 
+    
+    useEffect(() => {
+      const totalPrice = items.map(item => item.price).reduce((a, b) => a + b, 0);
+      const newMultiplier = 1 + (totalPrice * 0.001);
+      setClickMultiplier(newMultiplier);
+    }, [items])
     
     // Animate toast
     const [showToast, setShowToast] = useState(false)
@@ -149,9 +156,9 @@ function Clicker() {
 
     // Click amount / upgrades
     useEffect(() => { 
-        setClickAmount(1 + upgradeCount * upgradeStrength) 
+        setClickAmount(1 + upgradeCount * upgradeStrength * clickMultiplier) 
         setUpgradePrice(getAdjustedPrice(baseCosts.upgrade, upgradeCount))
-    }, [upgradeCount, upgradeStrength])
+    }, [upgradeCount, upgradeStrength, clickMultiplier])
 
     // City level / city unlock
     useEffect(() => { 
@@ -165,34 +172,21 @@ function Clicker() {
 
 
     // Localstorage saving
+    
       
-    useEffect(() => {
-        localStorage.setItem('elapsedTime', elapsedTime)
-        localStorage.setItem('coins', coins)
-        localStorage.setItem('coinsPerSec', coinsPerSec)
-        localStorage.setItem('clickAmount', clickAmount)
-        localStorage.setItem('upgradeStrength', upgradeStrength)
-        localStorage.setItem('autoClickerAmount', autoClickerAmount)
-        localStorage.setItem('upgradeCount', upgradeCount)
-        localStorage.setItem('upgradePrice', upgradePrice)
-        localStorage.setItem('buildingCount', buildingCount)
-        localStorage.setItem('buildingPrice', buildingPrice)
-        localStorage.setItem('cityLevel', cityLevel)
-        localStorage.setItem('shopStatus', shopStatus)
-        }, 
-        [elapsedTime,
-        coins,
-        coinsPerSec,
-        clickAmount,
-        upgradeStrength,
-        autoClickerAmount,
-        upgradeCount,
-        upgradePrice,
-        buildingCount,
-        buildingPrice,
-        cityLevel,
-        shopStatus,
-])
+    useEffect(() => {localStorage.setItem('elapsedTime', elapsedTime)}, [elapsedTime])
+    useEffect(() => {localStorage.setItem('coins', coins)}, [coins])
+    useEffect(() => {localStorage.setItem('coinsPerSec', coinsPerSec)}, [coinsPerSec])
+    useEffect(() => {localStorage.setItem('clickAmount', clickAmount)}, [clickAmount])
+    useEffect(() => {localStorage.setItem('upgradeStrength', upgradeStrength)}, [upgradeStrength])
+    useEffect(() => {localStorage.setItem('autoClickerAmount', autoClickerAmount)}, [autoClickerAmount])
+    useEffect(() => {localStorage.setItem('upgradeCount', upgradeCount)}, [upgradeCount])
+    useEffect(() => {localStorage.setItem('upgradePrice', upgradePrice)}, [upgradePrice])
+    useEffect(() => {localStorage.setItem('buildingCount', buildingCount)}, [buildingCount])
+    useEffect(() => {localStorage.setItem('buildingPrice', buildingPrice)}, [buildingPrice])
+    useEffect(() => {localStorage.setItem('cityLevel', cityLevel)}, [cityLevel])
+    useEffect(() => {localStorage.setItem('shopStatus', shopStatus)}, [shopStatus])
+    useEffect(() => {localStorage.setItem('clickMultiplier', clickMultiplier)}, [clickMultiplier])
 
 useEffect(() => {
     localStorage.setItem('items', JSON.stringify(items))
@@ -296,7 +290,7 @@ useEffect(() => {
                     />
                     <TextButton 
                         text='Upgrade' 
-                        label={`Gain +${cents(upgradeStrength)}/click`} 
+                        label={`Gain +${cents(upgradeStrength * clickMultiplier)}/click`} 
                         func={buyUpgrade} 
                         color={buttonColors.upgrade} 
                         price={upgradePrice}
@@ -318,6 +312,7 @@ useEffect(() => {
                         items={items}
                         setItems={setItems}
                         shopStatus={shopStatus}
+                        setShopStatus={setShopStatus}
                     />
                 </div>
             </div>
