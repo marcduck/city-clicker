@@ -10,6 +10,7 @@ import TextButton from './components/TextButton'
 import TagToPrompt from './components/TagToPrompt'
 import ShopWindow from './components/ShopWindow'
 import Toast from './components/Toast'
+import Inventory from './components/Inventory'
 
 
 const SectionHeading = ({ children }) => <h2 className='text-4xl font-bold mb-4'>{children}</h2>
@@ -43,6 +44,9 @@ export function numberWithCommas(x) {
 
 export function cents(n){
     return '$' + numberWithCommas(n.toFixed(2))
+}
+export function round1(n){
+    return numberWithCommas(n.toFixed(1))
 }
 
 export function canAfford(coins, price) {
@@ -247,7 +251,7 @@ useEffect(() => {
                 <h3 className='text-2xl font-semibold'>Stats:</h3>
                 <div className="grid">
                     <div>{`Cash: `} <span  className='font-semibold'>{cents(coins)}</span></div>
-                    <Stat children={`Clicking power: ${cents(clickAmount)}`} />
+                    <div>{`Clicking power: ${cents(clickAmount)}`} <span  className='text-xs'>{`(Base income: ${cents(upgradeCount*0.5)} from upgrades, ${round1(clickMultiplier)}x from items) `}</span></div>
                     <Stat children={`Income per sec: ${cents(coinsPerSec)}/s`} />
                     {/* <Stat children={`Elapsed time: ${elapsedTime}s`} /> */}
                     <br />
@@ -255,7 +259,8 @@ useEffect(() => {
                     <div className=''>Buildings: {buildingCount}</div>
                     <div className=''>Upgrades: {upgradeCount}</div>
                     <br />
-                    <Stat children={`Items: ${items.map(i => {return i.emoji+''})}`} />
+                    {/* <Stat children={`Items: ${items.map(i => {return i.emoji+''})}`} /> */}
+                    <Inventory items={items} />
                 </div>
             </div>
             <div className="graphic order-first md:order-none flat-outline shadow-lg">
