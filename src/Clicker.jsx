@@ -252,7 +252,7 @@ useEffect(() => {
                 <h3 className='text-2xl font-semibold'>Stats:</h3>
                 <div className="grid">
                     <div>{`Cash: `} <span  className='font-semibold'>{cents(coins)}</span></div>
-                    <div>{`Clicking power: ${cents(clickAmount)}`} <span  className='text-xs'>{!items.length ? null : `(Base income: ${cents(upgradeCount*0.5)} from upgrades, ${round1(clickMultiplier)}x from items) `}</span></div>
+                    <div>{`Clicking power: ${cents(clickAmount)}`} <span  className='text-xs'>{items.length<1 ? null : `(Base income: ${cents(upgradeCount*0.5)} from upgrades, ${round1(clickMultiplier)}x from items) `}</span></div>
                     <Stat children={`Income per sec: ${cents(coinsPerSec)}/s`} />
                     {/* <Stat children={`Elapsed time: ${elapsedTime}s`} /> */}
                     <br />
@@ -324,10 +324,10 @@ useEffect(() => {
             </div>
             </div>
             <div className="bottom gap-4 flex">
-                {/* <button className='bg-slate-400 py-0.5 px-1.5' onClick={() => window.localStorage.clear()}>Clear save</button>
+                {/* <button className='bg-slate-400 py-0.5 px-1.5' onClick={() => window.localStorage.clear()}>Clear save</button> */}
                 <button className='bg-slate-400 py-0.5 px-1.5' onClick={() => setCoins(coins + 1_000_000)}>Add money</button>
-                <button className='bg-slate-400 py-0.5 px-1.5' onClick={() => {setShowToast(true), setToastMessage(`New city unlocked: ${cities[cityLevel].name}!`)}}>Show toast</button>
-                <TagToPrompt /> */}
+                {/* <button className='bg-slate-400 py-0.5 px-1.5' onClick={() => {setShowToast(true), setToastMessage(`New city unlocked: ${cities[cityLevel].name}!`)}}>Show toast</button> */}
+                {/* <TagToPrompt /> */}
             </div>
 
 
