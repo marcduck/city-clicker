@@ -17,6 +17,7 @@ const SectionHeading = ({ children }) => <h2 className='text-4xl font-bold mb-4'
 
 // Game  variables
 const M = 1.15
+const clickPriceMultiplier = 0.0001
 
 let baseCosts = {
     upgrade: 8,
@@ -136,7 +137,7 @@ function Clicker() {
     
     useEffect(() => {
       const totalPrice = items.map(item => item.price).reduce((a, b) => a + b, 0);
-      const newMultiplier = 1 + (totalPrice * 0.001);
+      const newMultiplier = 1 + (totalPrice * clickPriceMultiplier);
       setClickMultiplier(newMultiplier);
     }, [items])
     
@@ -251,7 +252,7 @@ useEffect(() => {
                 <h3 className='text-2xl font-semibold'>Stats:</h3>
                 <div className="grid">
                     <div>{`Cash: `} <span  className='font-semibold'>{cents(coins)}</span></div>
-                    <div>{`Clicking power: ${cents(clickAmount)}`} <span  className='text-xs'>{`(Base income: ${cents(upgradeCount*0.5)} from upgrades, ${round1(clickMultiplier)}x from items) `}</span></div>
+                    <div>{`Clicking power: ${cents(clickAmount)}`} <span  className='text-xs'>{!items.length ? null : `(Base income: ${cents(upgradeCount*0.5)} from upgrades, ${round1(clickMultiplier)}x from items) `}</span></div>
                     <Stat children={`Income per sec: ${cents(coinsPerSec)}/s`} />
                     {/* <Stat children={`Elapsed time: ${elapsedTime}s`} /> */}
                     <br />
