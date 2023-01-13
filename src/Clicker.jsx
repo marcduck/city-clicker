@@ -17,7 +17,7 @@ const SectionHeading = ({ children }) => <h2 className='text-4xl font-bold mb-4'
 
 // Game  variables
 const M = 1.15
-const clickPriceMultiplier = 0.0001
+const clickPriceMultiplier = 0.00004
 
 let baseCosts = {
     upgrade: 8,
