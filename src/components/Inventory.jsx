@@ -5,7 +5,7 @@ import { cents } from '../Clicker'
 function Inventory({items, }) {
   const [hoveredItemId, setHoveredItemId] = useState(null);
   return (
-    <div className='grid grid-cols-12 gap-1'>
+    <div className='grid grid-cols-6 md:grid-cols-8'>
       {items.map((item, index) => {
 
           return (<div key={index}  className='flex flex-col items-center'>
