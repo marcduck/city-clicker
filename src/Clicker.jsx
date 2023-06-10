@@ -1,4 +1,9 @@
-import React, { useEffect, useState, useRef } from "react"
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useMemo,
+} from "react"
 import "flowbite"
 import { gsap } from "gsap"
 
@@ -193,7 +198,7 @@ function Clicker() {
   const [clickMultiplier, setClickMultiplier] =
     initializeFromStorage("clickMultiplier", 1)
 
-  useEffect(() => {
+  useMemo(() => {
     const totalPrice = items
       .map((item) => item.price)
       .reduce((a, b) => a + b, 0)
@@ -213,7 +218,7 @@ function Clicker() {
   // Calculated values
 
   // Clicks per Sec / buildings
-  useEffect(() => {
+  useMemo(() => {
     setCoinsPerSec(autoClickerAmount * buildingCount)
     setBuildingPrice(
       getAdjustedPrice(baseCosts.building, buildingCount)
@@ -221,7 +226,7 @@ function Clicker() {
   }, [autoClickerAmount, buildingCount])
 
   // Click amount / upgrades
-  useEffect(() => {
+  useMemo(() => {
     setClickAmount(
       1 + upgradeCount * upgradeStrength * clickMultiplier
     )
@@ -236,7 +241,7 @@ function Clicker() {
   ])
 
   // City level / city unlock
-  useEffect(() => {
+  useMemo(() => {
     let nextCityBuildingsRequired =
       cities[Math.min(cityLevel + 1, cities.length)]
         .buildingsRequired
