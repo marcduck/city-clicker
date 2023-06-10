@@ -4,14 +4,12 @@ import { gsap } from "gsap"
 
 // Components
 import Graphic from "./components/Graphic"
-import Shop from "./components/Shop"
-import Stat from "./components/Stat"
-import TextButton from "./components/TextButton"
-import TagToPrompt from "./components/TagToPrompt"
 import ShopWindow from "./components/ShopWindow"
 import Toast from "./components/Toast"
-import Inventory from "./components/Inventory"
 import ButtonGroup from "./components/ButtonGroup"
+import Stats from "./components/Stats"
+import { HolidayVillage } from "@mui/icons-material"
+import Inventory from "./components/Inventory"
 
 const SectionHeading = ({ children }) => (
   <h2 className="text-4xl font-bold mb-4">{children}</h2>
@@ -343,55 +341,22 @@ function Clicker() {
   }
 
   return (
-    <section className="flex-1 bg-slate-200">
-      <SectionHeading>City Clicker</SectionHeading>
-      <div className="grid interface grid-cols-1 gap-6 lg:grid-cols-2">
-        {/* Toast message - New city notification */}
-        <Toast
-          setShowToast={setShowToast}
-          showToast={showToast}
-          toastMessage={toastMessage}
+    <section className=" bg-slate-200">
+      <h1 className="flex gap-2 items-center text-4xl font-bold mb-4">
+        <HolidayVillage
+          fontSize="auto"
+          className="text-slate-700"
         />
-
-        <div className="stats outlined-box">
-          <h3 className="text-2xl font-semibold">Stats:</h3>
-          <div className="grid">
-            <div>
-              {`Cash: `}{" "}
-              <span className="font-semibold">
-                {cents(coins)}
-              </span>
-            </div>
-            <div>
-              {`Clicking power: ${cents(clickAmount)}`}{" "}
-              <span className="text-xs">
-                {items.length < 1
-                  ? null
-                  : `($1 base + (${cents(
-                      upgradeCount * upgradeStrength
-                    )}/click from upgrades x${round1(
-                      clickMultiplier
-                    )} from items)) `}
-              </span>
-            </div>
-            <Stat
-              children={`Income per sec: ${cents(
-                coinsPerSec
-              )}/s`}
-            />
-            {/* <Stat children={`Elapsed time: ${elapsedTime}s`} /> */}
-            <br />
-            {/* <Stat children={`City level: ${cityLevel}`} /> */}
-            <div className="">
-              Buildings: {buildingCount}
-            </div>
-            <div className="">Upgrades: {upgradeCount}</div>
-            <br />
-            {/* <Stat children={`Items: ${items.map(i => {return i.emoji+''})}`} /> */}
-            <Inventory items={items} />
-          </div>
-        </div>
-        <div className="graphic order-first md:order-none flat-outline shadow-lg">
+        <span className="text-slate-800">City Clicker</span>
+      </h1>
+      <Toast
+        setShowToast={setShowToast}
+        showToast={showToast}
+        toastMessage={toastMessage}
+      />
+      <div className="columns-1 lg:columns-2 interface">
+        {/* Toast message - New city notification */}
+        <div className="graphic order-first md:order-none flat-outline shadow-lg ">
           <Graphic
             cityLevel={cityLevel}
             highestCity={cities[cityLevel]}
@@ -401,6 +366,17 @@ function Clicker() {
             setSelectedCity={setSelectedCity}
           />
         </div>
+        <Stats
+          coins={coins}
+          clickAmount={clickAmount}
+          items={items}
+          cities={cities}
+          upgradeCount={upgradeCount}
+          upgradeStrength={upgradeStrength}
+          clickMultiplier={clickMultiplier}
+          coinsPerSec={coinsPerSec}
+          buildingCount={buildingCount}
+        />
 
         <ButtonGroup
           clickAmount={clickAmount}
@@ -430,7 +406,13 @@ function Clicker() {
             />
           </div>
         </div>
+        {items.length > 0 && (
+          <div className="outlined-box">
+            <Inventory items={items} />
+          </div>
+        )}
       </div>
+
       <div className="bottom gap-4 flex">
         {/* <button className='bg-slate-400 py-0.5 px-1.5' onClick={() => window.localStorage.clear()}>Clear save</button> */}
         {/* <button className='bg-slate-400 py-0.5 px-1.5' onClick={() => setCoins(coins + 1_000_000)}>Add money</button> */}

@@ -108,12 +108,14 @@ function Shop({
 
   function ShopImage() {
     return (
-      <img
-        onClick={openModal}
-        className={`w-40 h-40 rounded-xl object-cover object-top shadow-md hover:shadow-lg cursor-pointer`}
-        src={`./assets/img/clicker/shop/${shop.shopkeeper.img}.png`}
-        alt={shop.shopkeeper.name}
-      />
+      shop.shopkeeper.img && (
+        <img
+          onClick={openModal}
+          className={`w-40 h-40 rounded-xl object-cover object-top shadow-md hover:shadow-lg cursor-pointer`}
+          src={`./assets/img/clicker/shop/${shop.shopkeeper.img}.png`}
+          alt={shop.shopkeeper.name}
+        />
+      )
     )
   }
 

@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 // Blob animation
 @layer utilities {
   .animation-delay-2000 {
@@ -24,7 +23,12 @@
   --color-green-dark: #04724d;
   --color-blue-light: #d2dcf5;
   --color-blue-light-2: #b8c3e0;
-  --color-grey-transparent-1: rgba(97,108,119,0.6235294117647059);
+  --color-grey-transparent-1: rgba(
+    97,
+    108,
+    119,
+    0.6235294117647059
+  );
   --font-sans: "Karla", sans-serif;
   --font-size-tiny: 0.7rem;
   --font-size-sm: 1rem;
@@ -36,7 +40,7 @@
   --animation-time-tiny: 200ms;
   --animation-time-short: 500ms;
   --animation-time-med: 1s;
-  --box-shadow-small: rgba(99,99,99,0.2) 0px 2px 8px 0px
+  --box-shadow-small: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 * {
@@ -45,9 +49,6 @@
   margin: 0;
   font-family: var(--font-sans);
 }
-
-
-
 
 // Tailwind combos
 
@@ -69,12 +70,11 @@ section {
   active:translate-y-px 
   active:shadow-sm
   active:border-b-2
-  active:mb-0.5
-  ;
+  active:mb-0.5;
 }
 
 .flat-outline {
-  @apply border-slate-400 border ;
+  @apply border-slate-400 border;
 }
 
 .plain-box {
@@ -87,4 +87,34 @@ section {
 
 .text-xxs {
   font-size: 0.625rem;
+}
+
+.icon-text {
+  & svg {
+    @apply text-slate-600;
+  }
+
+  @apply flex gap-3  items-center;
+}
+
+.interface {
+  & > * {
+    @apply mb-6 break-inside-avoid;
+  }
+}
+
+@layer utilities {
+  @variants responsive {
+    .masonry-3-col {
+      column-count: 3;
+      column-gap: 1em;
+    }
+    .masonry-2-col {
+      column-count: 2;
+      column-gap: 1em;
+    }
+    .break-inside {
+      break-inside: avoid;
+    }
+  }
 }
