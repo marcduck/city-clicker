@@ -1,30 +1,53 @@
-import React, { useState } from 'react'
-import { cents } from '../Clicker'
+import React, { useState } from "react"
+import { cents } from "../Clicker"
 
-
-function Inventory({items, }) {
-  const [hoveredItemId, setHoveredItemId] = useState(null);
+function Inventory({ items }) {
+  const [hoveredItemId, setHoveredItemId] = useState(null)
   return (
-    <div className='grid grid-cols-6 md:grid-cols-8'>
-      {items.map((item, index) => {
-
-          return (<div key={index}  className='flex flex-col items-center'>
-
-
-          <div 
-            id='inventory-item'
-            className='p-3 flat-outline aspect-square items-center relative cursor-default shadow-sm hover:bg-slate-600/20' 
-            onMouseEnter={() => setHoveredItemId(index)}
-            onMouseLeave={() => setHoveredItemId(null)}
-            title={`${item.description} (${cents(item.price)})`}
-          >
-            <div className="flex-1">{item.emoji}</div>
-            {/* <div className="text-xxs">{`+${1 + item.price* 0.001}x click modifier`}</div> */}
-          </div>
-          <div className={`text-xxs whitespace-nowrap  ${hoveredItemId === index ? 'block' : 'invisible'} pointer-events-none`}>{item.name}</div>
+    <div>
+      <h1 className="text-2xl font-bold">Inventory</h1>
+      <div className="border p-2 max-h-80 overflow-y-auto">
+        <div
+          className=" flex flex-wrap
+        justify-evenly gap-4"
+        >
+          {items.map((item, index) => {
+            return (
+              <div
+                key={index}
+                className="flex flex-col items-center"
+              >
+                <div
+                  id="inventory-item"
+                  className="relative flex items-center justify-center w-14 h-14 p-1 border border-gray-300 rounded-lg bg-slate-50 hover:bg-gray-100"
+                  onMouseEnter={() =>
+                    setHoveredItemId(index)
+                  }
+                  onMouseLeave={() =>
+                    setHoveredItemId(null)
+                  }
+                  title={`${item.description} (${cents(
+                    item.price
+                  )})`}
+                >
+                  <div className="text-sm">
+                    {item.emoji}
+                  </div>
+                </div>
+                <div
+                  className={`text-xxs mt-1 ${
+                    hoveredItemId === index
+                      ? "block"
+                      : "hidden"
+                  } pointer-events-none absolute bg-white py-1 px-2 rounded-md shadow`}
+                >
+                  {item.name}
+                </div>
+              </div>
+            )
+          })}
         </div>
-        )
-      })}
+      </div>
     </div>
   )
 }

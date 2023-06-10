@@ -12,13 +12,22 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@headlessui/react": "^1.7.7",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.13.4",
     "@popperjs/core": "^2.11.6",
     "flowbite": "^1.6.0",
     "gsap": "^3.11.4",
+    "html2canvas": "^1.4.1",
+    "konva": "^8.4.3",
     "react": "^18.2.0",
+    "react-dnd": "^16.0.1",
     "react-dom": "^18.2.0",
+    "react-konva": "^18.2.5",
     "react-popper": "^2.3.0",
+    "react-resizable": "^3.0.5",
     "react-tabs": "^6.0.0",
     "sass": "^1.57.1"
   },
