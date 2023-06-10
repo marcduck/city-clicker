@@ -12,6 +12,7 @@ import {
   Upgrade,
 } from "@mui/icons-material"
 import { cents, round1 } from "../Clicker"
+import { plural } from "../utils/utils"
 
 const Stats = ({
   coins,
@@ -37,7 +38,7 @@ const Stats = ({
         </div>
         <div className="icon-text">
           <AdsClick />
-          {cents(clickAmount)}{" "}
+          Clicking power: {cents(clickAmount)}{" "}
           {items.length < 1 ? null : (
             <span className="text-xs">
               ($1 base + (
@@ -49,18 +50,19 @@ const Stats = ({
         </div>
         <div className="icon-text">
           <PriceChange />
-          {cents(coinsPerSec)}/s income
+          Income: {cents(coinsPerSec)}/s
         </div>
         <div className="icon-text">
-          <Gite /> {buildingCount} buildings
+          <Gite /> {buildingCount}{" "}
+          {plural("building", buildingCount)}
         </div>
         <div className="icon-text">
           <Hardware />
-          {upgradeCount} upgrades
+          {upgradeCount} {plural("upgrade", upgradeCount)}
         </div>
         <div className="icon-text">
           <Category />
-          {items?.length} items
+          {items?.length} {plural("item", items?.length)}
         </div>
       </div>
     </div>
