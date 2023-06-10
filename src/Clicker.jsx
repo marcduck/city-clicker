@@ -11,6 +11,7 @@ import TagToPrompt from "./components/TagToPrompt"
 import ShopWindow from "./components/ShopWindow"
 import Toast from "./components/Toast"
 import Inventory from "./components/Inventory"
+import ButtonGroup from "./components/ButtonGroup"
 
 const SectionHeading = ({ children }) => (
   <h2 className="text-4xl font-bold mb-4">{children}</h2>
@@ -401,38 +402,19 @@ function Clicker() {
           />
         </div>
 
-        <div className="buttons">
-          <div className="text-center grid-cols-3 grid border-slate-400 border md:border-none md:gap-6">
-            <TextButton
-              text="Collect"
-              label={`Collect ${cents(clickAmount)}`}
-              func={handleCollect}
-              color={buttonColors.collect}
-              clickerButton
-              key="Collect"
-            />
-            <TextButton
-              text="Build"
-              label={`Earn +${cents(autoClickerAmount)}/s`}
-              func={buyBuilding}
-              color={buttonColors.build}
-              price={buildingPrice}
-              coins={coins}
-              key="build"
-            />
-            <TextButton
-              text="Upgrade"
-              label={`Gain +${cents(
-                upgradeStrength * clickMultiplier
-              )}/click`}
-              func={buyUpgrade}
-              color={buttonColors.upgrade}
-              price={upgradePrice}
-              coins={coins}
-              key="upgrade"
-            />
-          </div>
-        </div>
+        <ButtonGroup
+          clickAmount={clickAmount}
+          handleCollect={handleCollect}
+          buttonColors={buttonColors}
+          autoClickerAmount={autoClickerAmount}
+          buyBuilding={buyBuilding}
+          buildingPrice={buildingPrice}
+          coins={coins}
+          upgradeStrength={upgradeStrength}
+          clickMultiplier={clickMultiplier}
+          buyUpgrade={buyUpgrade}
+          upgradePrice={upgradePrice}
+        />
 
         <div className="shop">
           <div className="outlined-box">
