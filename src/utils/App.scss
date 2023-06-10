@@ -103,6 +103,12 @@ section {
   }
 }
 
+.item-desc {
+  & > * {
+    // @apply border border-slate-700;
+  }
+}
+
 @layer utilities {
   @variants responsive {
     .masonry-3-col {

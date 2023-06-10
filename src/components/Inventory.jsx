@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { cents } from "../Clicker"
 import { AttachMoney, Sell } from "@mui/icons-material"
+import Tooltip from "./Tooltip"
 
 function Inventory({ items }) {
   const [itemSum, setItemSum] = useState(0)
@@ -16,10 +17,12 @@ function Inventory({ items }) {
     setItemSum(getItemSum(items))
   }, [items])
 
+  let hoveredItem = items[hoveredItemId] || null
+
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-2xl font-bold mb-4">Inventory</h1>
-      <div className="border p-4 max-h-80 overflow-y-auto bg-slate-50">
+      <div className="border p-4 max-h-80 overflow-y-scroll overflow-x-clip bg-slate-50">
         <div
           className=" flex flex-wrap justify-center
          gap-4"
@@ -27,6 +30,8 @@ function Inventory({ items }) {
           {items.map((item, index) => {
             return (
               <div
+                onMouseEnter={() => setHoveredItemId(index)}
+                // onMouseLeave={() => setHoveredItemId(null)}
                 key={index}
                 className="flex flex-col items-center"
               >
@@ -43,14 +48,32 @@ function Inventory({ items }) {
           })}
         </div>
       </div>
-      <div className="flex gap-2 items-center">
-        <Sell className="text-slate-700" fontSize="" />
-        <p>
-          Total value:{" "}
-          <span className="font-bold">
-            {cents(itemSum)}
-          </span>
-        </p>
+      <div className="bottom grid grid-cols-5 items-end gap-4">
+        <div className="flex gap-2 items-center col-span-2">
+          <Sell className="text-slate-700" fontSize="" />
+          <p>
+            Total value:{" "}
+            <span className="font-bold">
+              {cents(itemSum)}
+            </span>
+          </p>
+        </div>
+        <div className="flex col-span-3">
+          {hoveredItem && (
+            <div className="flex flex-col gap-1 item-desc text-xs">
+              <span className="flex gap-2 font-bold">
+                <span>{hoveredItem.emoji}</span>
+                {hoveredItem.name}
+              </span>
+              <span className="min-h-[2rem] text-xxs">
+                {hoveredItem.description}
+              </span>
+              <span className="">
+                {cents(hoveredItem.price)}
+              </span>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )

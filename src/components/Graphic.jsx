@@ -47,9 +47,7 @@ function Graphic({
     ) {
       return (
         <>
-          <span className="font-medium">
-            Next city unlocked!
-          </span>
+          <span className="font-medium"></span>
         </>
       )
     }
