@@ -276,7 +276,7 @@ function Clicker() {
     }, 1000)
 
     return () => clearInterval(interval)
-  }, [coinsPerSec])
+  }, [elapsedTime])
 
   // Event handlers
   function handleCollect() {
