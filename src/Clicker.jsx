@@ -267,7 +267,7 @@ function Clicker() {
   // Game loop
   // --
 
-  useMemo(() => {
+  useEffect(() => {
     const interval = setInterval(() => {
       //   console.log(coins, coinsPerSec)
 
