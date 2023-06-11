@@ -15,6 +15,14 @@ import ButtonGroup from "./components/ButtonGroup"
 import Stats from "./components/Stats"
 import { HolidayVillage } from "@mui/icons-material"
 import Inventory from "./components/Inventory"
+import Properties from "./components/Properties"
+
+import {
+  initializeObjectFromStorage,
+  initializeFromStorage,
+  getPropertyIncome,
+  canAfford,
+} from "./utils/utils"
 
 const SectionHeading = ({ children }) => (
   <h2 className="text-4xl font-bold mb-4">{children}</h2>
@@ -24,7 +32,7 @@ const SectionHeading = ({ children }) => (
 const M = 1.15
 const clickPriceMultiplier = 0.00004
 
-let baseCosts = {
+export let baseCosts = {
   upgrade: 8,
   building: 35,
 }
@@ -72,38 +80,6 @@ let cities = [
 
 // Utility functions
 
-export function numberWithCommas(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-}
-
-export function cents(n) {
-  return "$" + numberWithCommas(n.toFixed(2))
-}
-export function round1(n) {
-  return numberWithCommas(n.toFixed(1))
-}
-
-export function canAfford(coins, price) {
-  return price <= coins ? true : false
-}
-
-export function getFlagEmoji(countryCode) {
-  // SVG flag
-  // return <Flag code={countryCode} />
-  // Emoji flag
-  return countryCode
-    .toUpperCase()
-    .replace(/./g, (char) =>
-      String.fromCodePoint(127397 + char.charCodeAt())
-    )
-}
-
-export function getNextArrayItem(array, index) {
-  return index + 1 < array.length
-    ? array[index + 1]
-    : array[array.length - 1]
-}
-
 // ---
 // Main App
 // ---
@@ -129,39 +105,11 @@ function Clicker() {
 
   // Game variables
 
-  function initializeFromStorage(item, initialValue) {
-    return useState(() => {
-      const storedValue = localStorage.getItem(item)
-      // console.log(item, initialValue, typeof initialValue)
-      if (storedValue) {
-        if (storedValue.includes(".")) {
-          // If the stored value is a float, parse it into a float
-          return parseFloat(storedValue)
-        } else {
-          // If the stored value is an integer, parse it into an integer
-          return parseInt(storedValue)
-        }
-      } else {
-        // If there is no stored value, return the initial value
-        return initialValue
-      }
-    })
-  }
-
-  function initializeObjectFromStorage(item, initialValue) {
-    return useState(() => {
-      const storedValue = localStorage.getItem(item)
-        ? JSON.parse(localStorage.getItem(item))
-        : initialValue
-      return storedValue
-    })
-  }
-
   const [elapsedTime, setElapsedTime] =
     initializeFromStorage("elapsedTime", 0)
   const [coins, setCoins] = initializeFromStorage(
     "coins",
-    100_000_000_000
+    0
   )
   const [coinsPerSec, setCoinsPerSec] =
     initializeFromStorage("coinsPerSec", 0)
@@ -197,6 +145,8 @@ function Clicker() {
   )
   const [clickMultiplier, setClickMultiplier] =
     initializeFromStorage("clickMultiplier", 1)
+  const [ownedProperties, setOwnedProperties] =
+    initializeObjectFromStorage("ownedProperties", {})
 
   useMemo(() => {
     const totalPrice = items
@@ -217,13 +167,21 @@ function Clicker() {
 
   // Calculated values
 
-  // Clicks per Sec / buildings
+  // Coins per Sec / buildings
   useMemo(() => {
-    setCoinsPerSec(autoClickerAmount * buildingCount)
+    const propertyTotalValue = Object.values(
+      ownedProperties
+    ).reduce((a, b) => a + b, 0)
+    const propertyIncome = getPropertyIncome(
+      propertyTotalValue
+    )
+    setCoinsPerSec(
+      autoClickerAmount * buildingCount + propertyIncome
+    )
     setBuildingPrice(
       getAdjustedPrice(baseCosts.building, buildingCount)
     )
-  }, [autoClickerAmount, buildingCount])
+  }, [autoClickerAmount, buildingCount, ownedProperties])
 
   // Click amount / upgrades
   useMemo(() => {
@@ -259,71 +217,57 @@ function Clicker() {
 
   // Localstorage saving
 
-  useEffect(() => {
+  useMemo(() => {
     localStorage.setItem("elapsedTime", elapsedTime)
   }, [elapsedTime])
-  useEffect(() => {
+  useMemo(() => {
     localStorage.setItem("coins", coins)
   }, [coins])
-  useEffect(() => {
+  useMemo(() => {
     localStorage.setItem("coinsPerSec", coinsPerSec)
   }, [coinsPerSec])
-  useEffect(() => {
+  useMemo(() => {
     localStorage.setItem("clickAmount", clickAmount)
   }, [clickAmount])
-  useEffect(() => {
+  useMemo(() => {
     localStorage.setItem("upgradeStrength", upgradeStrength)
   }, [upgradeStrength])
-  useEffect(() => {
+  useMemo(() => {
     localStorage.setItem(
       "autoClickerAmount",
       autoClickerAmount
     )
   }, [autoClickerAmount])
-  useEffect(() => {
+  useMemo(() => {
     localStorage.setItem("upgradeCount", upgradeCount)
   }, [upgradeCount])
-  useEffect(() => {
+  useMemo(() => {
     localStorage.setItem("upgradePrice", upgradePrice)
   }, [upgradePrice])
-  useEffect(() => {
+  useMemo(() => {
     localStorage.setItem("buildingCount", buildingCount)
   }, [buildingCount])
-  useEffect(() => {
+  useMemo(() => {
     localStorage.setItem("buildingPrice", buildingPrice)
   }, [buildingPrice])
-  useEffect(() => {
+  useMemo(() => {
     localStorage.setItem("cityLevel", cityLevel)
   }, [cityLevel])
-  useEffect(() => {
+  useMemo(() => {
     localStorage.setItem("shopStatus", shopStatus)
   }, [shopStatus])
-  useEffect(() => {
+  useMemo(() => {
     localStorage.setItem("clickMultiplier", clickMultiplier)
   }, [clickMultiplier])
-
-  useEffect(() => {
+  useMemo(() => {
     localStorage.setItem("items", JSON.stringify(items))
   }, [items])
-
-  function clearLocalStorage() {
-    var proceed = confirm(
-      "Are you sure you want to reset your save?"
-    )
-    if (proceed) {
-      //proceed
-      localStorage.clear()
-    } else {
-      //don't proceed
-      return
-    }
-  }
 
   // --
   // Game loop
   // --
 
-  useEffect(() => {
+  useMemo(() => {
     const interval = setInterval(() => {
       //   console.log(coins, coinsPerSec)
 
@@ -410,6 +354,15 @@ function Clicker() {
               setShopStatus={setShopStatus}
             />
           </div>
+        </div>
+        <div className="outlined-box">
+          <Properties
+            coins={coins}
+            setCoins={setCoins}
+            selectedCity={selectedCity}
+            ownedProperties={ownedProperties}
+            setOwnedProperties={setOwnedProperties}
+          />
         </div>
         {items.length > 0 && (
           <div className="outlined-box">

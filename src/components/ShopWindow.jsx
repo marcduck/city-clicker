@@ -1,5 +1,5 @@
 import React from "react"
-import Shop, { listShopItems } from "./Shop"
+import Shop from "./Shop"
 
 function ShopWindow({
   shopStatus,
@@ -44,7 +44,6 @@ function ShopWindow({
         <div>
           Please pay the membership fee to enter the shop
         </div>
-        {/* {listShopItems(coins, shopKeyArray, items, setCoins, setItems)} */}
       </div>
     )
   }

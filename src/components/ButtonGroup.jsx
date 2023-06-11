@@ -1,6 +1,7 @@
 import React from "react"
-import { cents } from "../Clicker"
 import TextButton from "./TextButton"
+import { cents } from "../utils/utils"
+
 const ButtonGroup = ({
   clickAmount,
   handleCollect,

@@ -50,3 +50,112 @@ export function TagToPrompt() {
 export function plural(word, count, suffix = "s") {
   return `${word}${count !== 1 ? suffix : ""}`
 }
+
+export function initializeObjectFromStorage(
+  item,
+  initialValue
+) {
+  return useState(() => {
+    const storedValue = localStorage.getItem(item)
+      ? JSON.parse(localStorage.getItem(item))
+      : initialValue
+    return storedValue
+  })
+}
+
+export function initializeFromStorage(item, initialValue) {
+  return useState(() => {
+    const storedValue = localStorage.getItem(item)
+    // console.log(item, initialValue, typeof initialValue)
+    if (storedValue) {
+      if (storedValue.includes(".")) {
+        // If the stored value is a float, parse it into a float
+        return parseFloat(storedValue)
+      } else {
+        // If the stored value is an integer, parse it into an integer
+        return parseInt(storedValue)
+      }
+    } else {
+      // If there is no stored value, return the initial value
+      return initialValue
+    }
+  })
+}
+
+export function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+}
+
+export function cents(n) {
+  return "$" + numberWithCommas(n.toFixed(2))
+}
+export function round1(n) {
+  return numberWithCommas(n.toFixed(1))
+}
+
+export function roundTo(n, d = 10) {
+  return Math.floor(n / d) * d
+}
+
+export function canAfford(coins, price) {
+  return price <= coins ? true : false
+}
+
+export function getFlagEmoji(countryCode) {
+  // SVG flag
+  // return <Flag code={countryCode} />
+  // Emoji flag
+  return countryCode
+    .toUpperCase()
+    .replace(/./g, (char) =>
+      String.fromCodePoint(127397 + char.charCodeAt())
+    )
+}
+
+export function getNextArrayItem(array, index) {
+  return index + 1 < array.length
+    ? array[index + 1]
+    : array[array.length - 1]
+}
+
+export function getItemSum(items) {
+  return items.reduce((sum, item) => {
+    return sum + item.price
+  }, 0)
+}
+
+export function isAffordableText(price, coins) {
+  return canAfford(coins, price)
+    ? "text-emerald-800"
+    : "text-slate-400"
+}
+
+export function isAffordableDiv(price, coins) {
+  return canAfford(coins, price)
+    ? "bg-slate-200 border border-emerald-700 hover:cursor-pointer hover:bg-emerald-700/[.20]" // Can afford
+    : "bg-neutral-300 border border-neutral-400" // Can't afford
+}
+
+export function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
+export function getPropertyIncome(
+  price,
+  percentage = 0.003
+) {
+  return roundTo(price * percentage)
+}
+
+export function clearLocalStorage() {
+  var proceed = confirm(
+    "Are you REALLY sure you want to reset your save?"
+  )
+  if (proceed) {
+    //proceed
+    localStorage.clear()
+  } else {
+    //don't proceed
+    return
+  }
+}

@@ -11,8 +11,7 @@ import {
   PriceChange,
   Upgrade,
 } from "@mui/icons-material"
-import { cents, round1 } from "../Clicker"
-import { plural } from "../utils/utils"
+import { plural, cents, round1 } from "../utils/utils"
 
 const Stats = ({
   coins,

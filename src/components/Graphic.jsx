@@ -1,12 +1,14 @@
 import React from "react"
 import { useEffect, Fragment } from "react"
 import { Tab } from "@headlessui/react"
+import {
+  getFlagEmoji,
+  getNextArrayItem,
+} from "../utils/utils"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
 }
-
-import { getFlagEmoji, getNextArrayItem } from "../Clicker"
 
 function getTab(label, disabled, title = null, cityName) {
   return (

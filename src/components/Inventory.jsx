@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from "react"
-import { cents } from "../Clicker"
 import { AttachMoney, Sell } from "@mui/icons-material"
 import Tooltip from "./Tooltip"
-
+import { cents, getItemSum } from "../utils/utils"
 function Inventory({ items }) {
   const [itemSum, setItemSum] = useState(0)
   const [hoveredItemId, setHoveredItemId] = useState(null)
-
-  function getItemSum(items) {
-    return items.reduce((sum, item) => {
-      return sum + item.price
-    }, 0)
-  }
 
   useEffect(() => {
     setItemSum(getItemSum(items))
