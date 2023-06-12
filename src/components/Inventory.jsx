@@ -14,7 +14,6 @@ function Inventory({ items }) {
 
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="text-2xl font-bold mb-4">Inventory</h1>
       <div className="border p-4 max-h-80 overflow-y-scroll overflow-x-clip bg-slate-50">
         <div
           className=" flex flex-wrap justify-center

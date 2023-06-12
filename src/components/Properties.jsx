@@ -55,8 +55,7 @@ function Properties({
 
   return (
     <div>
-      <h1 className="text-2xl font-semibold">Properties</h1>
-      <div className="shop-items gap-2 mt-2 grid grid-rows-4 grid-cols-1 sm:grid-rows-2 sm:grid-cols-2">
+      <div className="shop-items gap-2 grid grid-rows-4 grid-cols-1 sm:grid-rows-2 sm:grid-cols-2">
         {shops[selectedCity].buildings.map((property) => {
           return (
             <div

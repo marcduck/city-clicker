@@ -10,6 +10,8 @@ export default function ShopImage({
       }`}
       src={`./assets/img/clicker/shop/${shop.shopkeeper.img}.png`}
       alt={shop.shopkeeper.name}
+      width={"10rem"}
+      height={"10rem"}
     />
   )
 }

@@ -23,6 +23,12 @@ import {
   getPropertyIncome,
   canAfford,
 } from "./utils/utils"
+import {
+  DragDropContext,
+  Draggable,
+  Droppable,
+} from "react-beautiful-dnd"
+import Window from "./components/Window"
 
 const SectionHeading = ({ children }) => (
   <h2 className="text-4xl font-bold mb-4">{children}</h2>
@@ -289,6 +295,113 @@ function Clicker() {
     upgrade: "bg-purple-800 border-purple-900",
   }
 
+  const dashboardComponents = [
+    {
+      name: "Cities",
+      component: (
+        <Graphic
+          cityLevel={cityLevel}
+          highestCity={cities[cityLevel]}
+          buildingCount={buildingCount}
+          cities={cities}
+          selectedCity={selectedCity}
+          setSelectedCity={setSelectedCity}
+        />
+      ),
+    },
+    {
+      name: "Stats",
+      component: (
+        <Stats
+          coins={coins}
+          clickAmount={clickAmount}
+          items={items}
+          cities={cities}
+          upgradeCount={upgradeCount}
+          upgradeStrength={upgradeStrength}
+          clickMultiplier={clickMultiplier}
+          coinsPerSec={coinsPerSec}
+          buildingCount={buildingCount}
+        />
+      ),
+    },
+    {
+      name: "ButtonGroup",
+      hideTitle: true,
+      component: (
+        <ButtonGroup
+          clickAmount={clickAmount}
+          handleCollect={handleCollect}
+          buttonColors={buttonColors}
+          autoClickerAmount={autoClickerAmount}
+          buyBuilding={buyBuilding}
+          buildingPrice={buildingPrice}
+          coins={coins}
+          upgradeStrength={upgradeStrength}
+          clickMultiplier={clickMultiplier}
+          buyUpgrade={buyUpgrade}
+          upgradePrice={upgradePrice}
+        />
+      ),
+    },
+    {
+      name: "Shop",
+      component: (
+        <div className="shop">
+          <ShopWindow
+            coins={coins}
+            setCoins={setCoins}
+            selectedCity={selectedCity}
+            cities={cities}
+            items={items}
+            setItems={setItems}
+            shopStatus={shopStatus}
+            setShopStatus={setShopStatus}
+          />
+        </div>
+      ),
+    },
+    {
+      name: "Properties",
+      component: (
+        <Properties
+          coins={coins}
+          setCoins={setCoins}
+          selectedCity={selectedCity}
+          ownedProperties={ownedProperties}
+          setOwnedProperties={setOwnedProperties}
+        />
+      ),
+    },
+    {
+      name: "Inventory",
+      component: <Inventory items={items} />,
+    },
+  ]
+
+  const [itemList, setItemList] = useState(
+    dashboardComponents
+  )
+
+  const handleDrop = (droppedItem) => {
+    // Ignore drop outside droppable container
+    if (!droppedItem.destination) return
+    var updatedList = [...itemList]
+    // Remove dragged item
+    const [reorderedItem] = updatedList.splice(
+      droppedItem.source.index,
+      1
+    )
+    // Add dropped item
+    updatedList.splice(
+      droppedItem.destination.index,
+      0,
+      reorderedItem
+    )
+    // Update State
+    setItemList(updatedList)
+  }
+
   return (
     <section className=" bg-slate-200">
       <h1 className="flex gap-2 items-center text-4xl font-bold mb-4">
@@ -303,72 +416,44 @@ function Clicker() {
         showToast={showToast}
         toastMessage={toastMessage}
       />
-      <div className="columns-1 lg:columns-2 interface">
+      <div>
+        <DragDropContext onDragEnd={handleDrop}>
+          <Droppable droppableId="list-container">
+            {(provided) => (
+              <div
+                className="columns-1 lg:columns-2 interface"
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {itemList.map((item, index) => (
+                  <Draggable
+                    key={item.name}
+                    draggableId={item.name}
+                    index={index}
+                  >
+                    {(provided) => (
+                      <div
+                        className="item-container"
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                      >
+                        <Window
+                          title={item.name}
+                          hideTitle={item.hideTitle}
+                          provided={provided}
+                        >
+                          {item.component}
+                        </Window>
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
         {/* Toast message - New city notification */}
-        <div className="graphic order-first md:order-none flat-outline shadow-lg ">
-          <Graphic
-            cityLevel={cityLevel}
-            highestCity={cities[cityLevel]}
-            buildingCount={buildingCount}
-            cities={cities}
-            selectedCity={selectedCity}
-            setSelectedCity={setSelectedCity}
-          />
-        </div>
-        <Stats
-          coins={coins}
-          clickAmount={clickAmount}
-          items={items}
-          cities={cities}
-          upgradeCount={upgradeCount}
-          upgradeStrength={upgradeStrength}
-          clickMultiplier={clickMultiplier}
-          coinsPerSec={coinsPerSec}
-          buildingCount={buildingCount}
-        />
-
-        <ButtonGroup
-          clickAmount={clickAmount}
-          handleCollect={handleCollect}
-          buttonColors={buttonColors}
-          autoClickerAmount={autoClickerAmount}
-          buyBuilding={buyBuilding}
-          buildingPrice={buildingPrice}
-          coins={coins}
-          upgradeStrength={upgradeStrength}
-          clickMultiplier={clickMultiplier}
-          buyUpgrade={buyUpgrade}
-          upgradePrice={upgradePrice}
-        />
-
-        <div className="shop">
-          <div className="outlined-box">
-            <ShopWindow
-              coins={coins}
-              setCoins={setCoins}
-              selectedCity={selectedCity}
-              cities={cities}
-              items={items}
-              setItems={setItems}
-              shopStatus={shopStatus}
-              setShopStatus={setShopStatus}
-            />
-          </div>
-        </div>
-        <div className="outlined-box">
-          <Properties
-            coins={coins}
-            setCoins={setCoins}
-            selectedCity={selectedCity}
-            ownedProperties={ownedProperties}
-            setOwnedProperties={setOwnedProperties}
-          />
-        </div>
-        {items.length > 0 && (
-          <div className="outlined-box">
-            <Inventory items={items} />
-          </div>
-        )}
       </div>
 
       <div className="bottom gap-4 flex">
