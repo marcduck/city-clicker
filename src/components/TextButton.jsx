@@ -24,7 +24,6 @@ function TextButton({
         text-center bg-slate-100
         flex flex-col 
         py-1 px-2 gap-1 sm:py-2 sm:px-4 sm:gap-2 
-        border-slate-100 md:border-slate-400 border
         ${clickerButton && "select-none"} `}
     >
       <p className="text-xs text-slate-700">

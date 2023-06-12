@@ -17,7 +17,7 @@ const ButtonGroup = ({
 }) => {
   return (
     <div className="buttons">
-      <div className="text-center grid-cols-3 grid border-slate-400 border md:border-none md:gap-6">
+      <div className="text-center grid-cols-3 grid md:gap-6">
         <TextButton
           text="Collect"
           label={`Collect ${cents(clickAmount)}`}

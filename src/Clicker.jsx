@@ -275,7 +275,7 @@ function Clicker() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      //   console.log(coins, coinsPerSec)
+      console.log(coins)
 
       setCoins((coins) => coins + coinsPerSec)
       setElapsedTime((elapsedTime) => elapsedTime + 1)
@@ -298,6 +298,7 @@ function Clicker() {
   const dashboardComponents = [
     {
       name: "Cities",
+      noPadding: true,
       component: (
         <Graphic
           cityLevel={cityLevel}
@@ -328,6 +329,7 @@ function Clicker() {
     {
       name: "ButtonGroup",
       hideTitle: true,
+      noPadding: true,
       component: (
         <ButtonGroup
           clickAmount={clickAmount}
@@ -440,6 +442,7 @@ function Clicker() {
                         <Window
                           title={item.name}
                           hideTitle={item.hideTitle}
+                          noPadding={item.noPadding}
                           provided={provided}
                         >
                           {item.component}

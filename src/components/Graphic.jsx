@@ -68,7 +68,7 @@ function Graphic({
   return (
     <div className="">
       <Tab.Group onChange={(i) => handleTabChange(i)}>
-        <Tab.List className="border-b border-slate-400 select-none flex space-x-1 p-2 bg-slate-100">
+        <Tab.List className="border-b border-slate-400 select-none flex space-x-1 px-6 py-2 bg-slate-100">
           {cities.map((c, i) => {
             let nextBuildingsRequired =
               i - 1 >= 0 ? cities[i].buildingsRequired : 0
