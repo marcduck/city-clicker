@@ -295,6 +295,25 @@ function Clicker() {
     upgrade: "bg-purple-800 border-purple-900",
   }
 
+  const handleDrop = (droppedItem) => {
+    // Ignore drop outside droppable container
+    if (!droppedItem.destination) return
+    const updatedList = [...itemList]
+    // Remove dragged item
+    const [reorderedItem] = updatedList.splice(
+      droppedItem.source.index,
+      1
+    )
+    // Add dropped item
+    updatedList.splice(
+      droppedItem.destination.index,
+      0,
+      reorderedItem
+    )
+    // Update State
+    setItemList(updatedList)
+  }
+
   const dashboardComponents = [
     {
       name: "Cities",
@@ -382,27 +401,8 @@ function Clicker() {
   ]
 
   const [itemList, setItemList] = useState(
-    dashboardComponents
+    dashboardComponents.map((component) => component.name)
   )
-
-  const handleDrop = (droppedItem) => {
-    // Ignore drop outside droppable container
-    if (!droppedItem.destination) return
-    var updatedList = [...itemList]
-    // Remove dragged item
-    const [reorderedItem] = updatedList.splice(
-      droppedItem.source.index,
-      1
-    )
-    // Add dropped item
-    updatedList.splice(
-      droppedItem.destination.index,
-      0,
-      reorderedItem
-    )
-    // Update State
-    setItemList(updatedList)
-  }
 
   return (
     <section className=" bg-slate-200">
@@ -427,30 +427,37 @@ function Clicker() {
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
-                {itemList.map((item, index) => (
-                  <Draggable
-                    key={item.name}
-                    draggableId={item.name}
-                    index={index}
-                  >
-                    {(provided) => (
-                      <div
-                        className="item-container"
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                      >
-                        <Window
-                          title={item.name}
-                          hideTitle={item.hideTitle}
-                          noPadding={item.noPadding}
-                          provided={provided}
+                {itemList.map((itemName, index) => {
+                  const component =
+                    dashboardComponents.find(
+                      (component) =>
+                        component.name === itemName
+                    )
+                  return (
+                    <Draggable
+                      key={itemName}
+                      draggableId={itemName}
+                      index={index}
+                    >
+                      {(provided) => (
+                        <div
+                          className="item-container"
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
                         >
-                          {item.component}
-                        </Window>
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
+                          <Window
+                            title={itemName}
+                            hideTitle={component.hideTitle}
+                            noPadding={component.noPadding}
+                            provided={provided}
+                          >
+                            {component.component}
+                          </Window>
+                        </div>
+                      )}
+                    </Draggable>
+                  )
+                })}
                 {provided.placeholder}
               </div>
             )}
