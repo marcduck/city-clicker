@@ -123,6 +123,98 @@ export const shops = [
         emoji: "🍽️",
       },
     ],
+    souvenirs: [
+      {
+        name: "Cocoa Delights",
+        price: 20,
+        emoji: "🍫",
+        description:
+          "Indulge in the rich and creamy taste of Swiss chocolate, crafted with love and expertise.",
+        type: "Food",
+        duration: 60,
+      },
+      {
+        name: "Melody Masters",
+        price: 75,
+        emoji: "🎵",
+        description:
+          "Listen to enchanting melodies with this intricately crafted music box by Melody Masters.",
+        type: "Music",
+        duration: 120,
+      },
+      {
+        name: "Snowy Memories",
+        price: 30,
+        emoji: "❄️",
+        description:
+          "Capture the magic of Lucerne with a charming snow globe, featuring iconic landmarks and falling snowflakes.",
+        type: "Decor",
+        duration: 30,
+      },
+      {
+        name: "Swiss Tool Works",
+        price: 100,
+        emoji: "🔪",
+        description:
+          "Embrace Swiss craftsmanship with a versatile Swiss Army Knife by Swiss Tool Works, equipped with various tools for any situation.",
+        type: "Tool",
+        duration: 90,
+      },
+      {
+        name: "PuzzleLand",
+        price: 15,
+        emoji: "🧩",
+        description:
+          "Piece together the beauty of Lucerne's historic landmarks with this captivating jigsaw puzzle by PuzzleLand.",
+        type: "Game",
+        duration: 45,
+      },
+      {
+        name: "Alpine Adornments",
+        price: 10,
+        emoji: "🌼",
+        description:
+          "Adorn your keys with a delicate Edelweiss keychain by Alpine Adornments, symbolizing Alpine resilience and beauty.",
+        type: "Accessory",
+        duration: 10,
+      },
+      {
+        name: "Swiss Couture",
+        price: 25,
+        emoji: "👜",
+        description:
+          "Carry a piece of Lucerne wherever you go with this stylish and eco-friendly tote bag by Swiss Couture.",
+        type: "Fashion",
+        duration: 60,
+      },
+      {
+        name: "BellChimes",
+        price: 12,
+        emoji: "🔔",
+        description:
+          "Bring a touch of Swiss folklore to your fridge with a charming cowbell magnet by BellChimes, echoing the melodies of the Alps.",
+        type: "Decor",
+        duration: 15,
+      },
+      {
+        name: "Alpine Vistas",
+        price: 40,
+        emoji: "🏔️",
+        description:
+          "Admire the breathtaking beauty of the Alps with this stunning poster by Alpine Vistas, capturing their majestic allure.",
+        type: "Art",
+        duration: 75,
+      },
+      {
+        name: "MugJoy",
+        price: 18,
+        emoji: "☕",
+        description:
+          "Savor your morning coffee in a delightful Lucerne-themed mug by MugJoy, showcasing the city's scenic splendor.",
+        type: "Drinkware",
+        duration: 30,
+      },
+    ],
   },
   // 1 - Columbus
   {
@@ -244,6 +336,98 @@ export const shops = [
           "Adrenaline",
         ],
         emoji: "🎢",
+      },
+    ],
+    souvenirs: [
+      {
+        productName: "Grant Gourmet Chocolates",
+        price: 25,
+        emoji: "🍫",
+        description:
+          "Indulge in the decadent flavors of Grant with this assortment of gourmet chocolates.",
+        duration: 120,
+        type: "Food",
+      },
+      {
+        productName: "Riverside Art Print",
+        price: 45,
+        emoji: "🖼️",
+        description:
+          "Add a touch of elegance to your living space with this captivating art print inspired by Riverside.",
+        duration: 90,
+        type: "Home Decor",
+      },
+      {
+        productName: "Summit Trail Hiking Backpack",
+        price: 65,
+        emoji: "🎒",
+        description:
+          "Embark on your next adventure with the Summit Trail hiking backpack.",
+        duration: 240,
+        type: "Outdoor Gear",
+      },
+      {
+        productName: "Elmwood Enamel Pin Set",
+        price: 20,
+        emoji: "📌",
+        description:
+          "Elevate your style with this Elmwood enamel pin set.",
+        duration: 60,
+        type: "Fashion Accessories",
+      },
+      {
+        productName: "Central Plaza Souvenir Plate",
+        price: 35,
+        emoji: "🍽️",
+        description:
+          "Commemorate your visit to Central Plaza with this collectible souvenir plate.",
+        duration: 180,
+        type: "Home Decor",
+      },
+      {
+        productName: "Magnolia Market Tote",
+        price: 30,
+        emoji: "👜",
+        description:
+          "Carry your essentials in style with this chic Magnolia Market tote.",
+        duration: 120,
+        type: "Fashion Accessories",
+      },
+      {
+        productName: "Liberty Stadium Football Jersey",
+        price: 60,
+        emoji: "🏈",
+        description:
+          "Show your team spirit with the Liberty Stadium football jersey.",
+        duration: 150,
+        type: "Sports",
+      },
+      {
+        productName: "Oakwood Orchard Scented Candle",
+        price: 28,
+        emoji: "🕯️",
+        description:
+          "Fill your home with the inviting aroma of Oakwood Orchard.",
+        duration: 90,
+        type: "Home Decor",
+      },
+      {
+        productName: "Waterfront Coffee Blend",
+        price: 22,
+        emoji: "☕",
+        description:
+          "Wake up to the rich flavors of Waterfront with this artisanal coffee blend.",
+        duration: 120,
+        type: "Food",
+      },
+      {
+        productName: "Harbor Bay Keychain",
+        price: 20,
+        emoji: "⚓",
+        description:
+          "Keep a piece of Harbor Bay close at hand with this nautical-themed keychain.",
+        duration: 60,
+        type: "Accessories",
       },
     ],
   },

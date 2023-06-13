@@ -12,6 +12,7 @@ import {
   Upgrade,
 } from "@mui/icons-material"
 import { plural, cents, round1 } from "../utils/utils"
+import SouvenirShop from "./SouvenirShop"
 
 const Stats = ({
   coins,

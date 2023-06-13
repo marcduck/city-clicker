@@ -10,6 +10,7 @@ import { gsap } from "gsap"
 // Components
 import Graphic from "./components/Graphic"
 import ShopWindow from "./components/ShopWindow"
+import SouvenirShop from "./components/SouvenirShop"
 import Toast from "./components/Toast"
 import ButtonGroup from "./components/ButtonGroup"
 import Stats from "./components/Stats"
@@ -141,6 +142,8 @@ function Clicker() {
     initializeFromStorage("clickMultiplier", 1)
   const [ownedProperties, setOwnedProperties] =
     initializeObjectFromStorage("ownedProperties", {})
+  const [ownedSouvenirs, setOwnedSouvenirs] =
+    initializeObjectFromStorage("ownedSouvenirs", {})
 
   useMemo(() => {
     const totalPrice = items
@@ -263,7 +266,7 @@ function Clicker() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      console.log(coins)
+      // console.log(coins)
 
       setCoins((coins) => coins + coinsPerSec)
       setElapsedTime((elapsedTime) => elapsedTime + 1)
@@ -379,6 +382,17 @@ function Clicker() {
           selectedCity={selectedCity}
           ownedProperties={ownedProperties}
           setOwnedProperties={setOwnedProperties}
+        />
+      ),
+    },
+    {
+      name: "Souvenir Shop",
+      noPadding: true,
+      component: (
+        <SouvenirShop
+          setOwnedSouvenirs={setOwnedSouvenirs}
+          ownedSouvenirs={ownedSouvenirs}
+          selectedCity={selectedCity}
         />
       ),
     },
