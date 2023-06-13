@@ -1,6 +1,10 @@
 import React from "react"
 import { useEffect, useState } from "react"
-import { canAfford, cents } from "../utils/utils"
+import {
+  canAfford,
+  cents,
+  shortCents,
+} from "../utils/utils"
 
 function TextButton({
   text,
@@ -29,7 +33,7 @@ function TextButton({
       <p className="text-xs text-slate-700">
         {clickerButton
           ? "Collect"
-          : `Buy 1: ${cents(price)}`}
+          : `Buy 1: ${shortCents(price)}`}
       </p>
       <button
         className={`button-physical ${buttonColor()}`}

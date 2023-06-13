@@ -1,16 +1,14 @@
-import { useState } from 'react'
-import './utils/App.scss'
-import Footer from './components/Footer'
-import Clicker from './Clicker'
+import { useState } from "react"
+import "./utils/App.scss"
+import Footer from "./components/Footer"
+import Clicker from "./Clicker"
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <Clicker />
       <Footer />
-    </>
+    </div>
   )
 }
 

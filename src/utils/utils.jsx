@@ -87,10 +87,10 @@ export function numberWithCommas(x) {
 }
 
 export function cents(n) {
-  return "$" + numberWithCommas(n.toFixed(2))
+  return "$" + round1(n, 2)
 }
-export function round1(n) {
-  return numberWithCommas(n.toFixed(1))
+export function round1(n, decimals = 1) {
+  return numberWithCommas(n.toFixed(decimals))
 }
 
 export function roundTo(n, d = 10) {
@@ -158,4 +158,18 @@ export function clearLocalStorage() {
     //don't proceed
     return
   }
+}
+
+export function shortNum(n, decimals = 1, min = 1_000_000) {
+  if (n > min) {
+    return Intl.NumberFormat("en-US", {
+      notation: "compact",
+      maximumFractionDigits: decimals,
+    }).format(n)
+  }
+  return round1(n, decimals)
+}
+
+export function shortCents(n) {
+  return `$${shortNum(n, 2, 500_000)}`
 }

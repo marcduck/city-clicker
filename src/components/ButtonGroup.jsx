@@ -1,6 +1,6 @@
 import React from "react"
 import TextButton from "./TextButton"
-import { cents } from "../utils/utils"
+import { shortCents } from "../utils/utils"
 
 const ButtonGroup = ({
   clickAmount,
@@ -20,7 +20,7 @@ const ButtonGroup = ({
       <div className="text-center grid-cols-3 grid md:gap-6">
         <TextButton
           text="Collect"
-          label={`Collect ${cents(clickAmount)}`}
+          label={`Collect ${shortCents(clickAmount)}`}
           func={handleCollect}
           color={buttonColors.collect}
           clickerButton
@@ -28,7 +28,7 @@ const ButtonGroup = ({
         />
         <TextButton
           text="Build"
-          label={`Earn +${cents(autoClickerAmount)}/s`}
+          label={`Earn +${shortCents(autoClickerAmount)}/s`}
           func={buyBuilding}
           color={buttonColors.build}
           price={buildingPrice}
@@ -37,7 +37,7 @@ const ButtonGroup = ({
         />
         <TextButton
           text="Upgrade"
-          label={`Gain +${cents(
+          label={`Gain +${shortCents(
             upgradeStrength * clickMultiplier
           )}/click`}
           func={buyUpgrade}

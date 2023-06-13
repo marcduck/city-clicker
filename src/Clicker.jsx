@@ -30,10 +30,6 @@ import {
 } from "react-beautiful-dnd"
 import Window from "./components/Window"
 
-const SectionHeading = ({ children }) => (
-  <h2 className="text-4xl font-bold mb-4">{children}</h2>
-)
-
 // Game  variables
 const M = 1.15
 const clickPriceMultiplier = 0.00004
@@ -81,14 +77,6 @@ let cities = [
     country: "GT",
   },
 ]
-
-// console.log(cities)
-
-// Utility functions
-
-// ---
-// Main App
-// ---
 
 function Clicker() {
   function buyBuilding() {
@@ -346,7 +334,7 @@ function Clicker() {
       ),
     },
     {
-      name: "ButtonGroup",
+      name: "Buttons",
       hideTitle: true,
       noPadding: true,
       component: (
@@ -405,7 +393,7 @@ function Clicker() {
   )
 
   return (
-    <section className=" bg-slate-200">
+    <section className=" bg-slate-200 flex-grow">
       <h1 className="flex gap-2 items-center text-4xl font-bold mb-4">
         <HolidayVillage
           fontSize="auto"
