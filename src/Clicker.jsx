@@ -30,6 +30,10 @@ import {
   Droppable,
 } from "react-beautiful-dnd"
 import Window from "./components/Window"
+import GameComponent from "./components/Minigames/Alpine"
+import Alpine from "./components/Minigames/Alpine"
+import Lakeview from "./components/Minigames/Lakeview"
+import MemoryGame from "./components/Minigames/MemoryGame"
 
 // Game  variables
 const M = 1.15
@@ -104,6 +108,10 @@ function Clicker() {
     initializeFromStorage("elapsedTime", 0)
   const [coins, setCoins] = initializeFromStorage(
     "coins",
+    0
+  )
+  const [tokens, setTokens] = initializeFromStorage(
+    "tokens",
     0
   )
   const [coinsPerSec, setCoinsPerSec] =
@@ -220,6 +228,9 @@ function Clicker() {
   useMemo(() => {
     localStorage.setItem("coins", coins)
   }, [coins])
+  useMemo(() => {
+    localStorage.setItem("tokens", tokens)
+  }, [tokens])
   useMemo(() => {
     localStorage.setItem("coinsPerSec", coinsPerSec)
   }, [coinsPerSec])
@@ -393,6 +404,28 @@ function Clicker() {
           setOwnedSouvenirs={setOwnedSouvenirs}
           ownedSouvenirs={ownedSouvenirs}
           selectedCity={selectedCity}
+          tokens={tokens}
+          setTokens={setTokens}
+        />
+      ),
+    },
+    // {
+    //   name: "Alpine",
+    //   noPadding: true,
+    //   component: <Alpine />,
+    // },
+    // {
+    //   name: "Lakeview",
+    //   noPadding: true,
+    //   component: <Lakeview />,
+    // },
+    {
+      name: "Memory Game",
+      component: (
+        <MemoryGame
+          tokens={tokens}
+          setTokens={setTokens}
+          ownedSouvenirs={ownedSouvenirs}
         />
       ),
     },

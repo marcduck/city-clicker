@@ -340,7 +340,7 @@ export const shops = [
     ],
     souvenirs: [
       {
-        productName: "Grant Gourmet Chocolates",
+        name: "Grant Gourmet Chocolates",
         price: 25,
         emoji: "🍫",
         description:
@@ -349,7 +349,7 @@ export const shops = [
         type: "Food",
       },
       {
-        productName: "Riverside Art Print",
+        name: "Riverside Art Print",
         price: 45,
         emoji: "🖼️",
         description:
@@ -358,7 +358,7 @@ export const shops = [
         type: "Home Decor",
       },
       {
-        productName: "Summit Trail Hiking Backpack",
+        name: "Summit Trail Hiking Backpack",
         price: 65,
         emoji: "🎒",
         description:
@@ -367,7 +367,7 @@ export const shops = [
         type: "Outdoor Gear",
       },
       {
-        productName: "Elmwood Enamel Pin Set",
+        name: "Elmwood Enamel Pin Set",
         price: 20,
         emoji: "📌",
         description:
@@ -376,7 +376,7 @@ export const shops = [
         type: "Fashion Accessories",
       },
       {
-        productName: "Central Plaza Souvenir Plate",
+        name: "Central Plaza Souvenir Plate",
         price: 35,
         emoji: "🍽️",
         description:
@@ -385,7 +385,7 @@ export const shops = [
         type: "Home Decor",
       },
       {
-        productName: "Magnolia Market Tote",
+        name: "Magnolia Market Tote",
         price: 30,
         emoji: "👜",
         description:
@@ -394,7 +394,7 @@ export const shops = [
         type: "Fashion Accessories",
       },
       {
-        productName: "Liberty Stadium Football Jersey",
+        name: "Liberty Stadium Football Jersey",
         price: 60,
         emoji: "🏈",
         description:
@@ -403,7 +403,7 @@ export const shops = [
         type: "Sports",
       },
       {
-        productName: "Oakwood Orchard Scented Candle",
+        name: "Oakwood Orchard Scented Candle",
         price: 28,
         emoji: "🕯️",
         description:
@@ -412,7 +412,7 @@ export const shops = [
         type: "Home Decor",
       },
       {
-        productName: "Waterfront Coffee Blend",
+        name: "Waterfront Coffee Blend",
         price: 22,
         emoji: "☕",
         description:
@@ -421,7 +421,7 @@ export const shops = [
         type: "Food",
       },
       {
-        productName: "Harbor Bay Keychain",
+        name: "Harbor Bay Keychain",
         price: 20,
         emoji: "⚓",
         description:
@@ -555,6 +555,98 @@ export const shops = [
         emoji: "☕",
       },
     ],
+    souvenirs: [
+      {
+        name: "Rhine Rhapsody Vinyl",
+        price: 25,
+        emoji: "🎵",
+        description:
+          "Experience the soul of Bonn with this limited edition vinyl featuring classical compositions by renowned local artists.",
+        type: "Music",
+        duration: 60,
+      },
+      {
+        name: "Beethoven's Legacy Statue",
+        price: 45,
+        emoji: "🎶",
+        description:
+          "Celebrate Bonn's most famous son with this beautifully crafted statue capturing the essence of Ludwig van Beethoven.",
+        type: "Art",
+        duration: 90,
+      },
+      {
+        name: "Rheinaue Park Puzzle",
+        price: 20,
+        emoji: "🧩",
+        description:
+          "Piece together the natural beauty of Bonn's Rheinaue Park with this scenic 500-piece puzzle, perfect for a cozy afternoon at home.",
+        type: "Games",
+        duration: 45,
+      },
+      {
+        name: "Bonn Cathedral Snow Globe",
+        price: 30,
+        emoji: "❄️",
+        description:
+          "Capture the magical allure of Bonn's stunning cathedral with this intricately designed snow globe, a cherished keepsake for any collector.",
+        type: "Home Decor",
+        duration: 30,
+      },
+      {
+        name: "Bonn Beer Stein",
+        price: 15,
+        emoji: "🍺",
+        description:
+          "Raise a glass to Bonn's brewing heritage with this traditional beer stein, featuring iconic landmarks and a frothy pint of local brew.",
+        type: "Drinkware",
+        duration: 60,
+      },
+      {
+        name: "Bonn Skyline Poster",
+        price: 12,
+        emoji: "🌇",
+        description:
+          "Adorn your walls with a stunning poster showcasing Bonn's distinctive skyline, a blend of historic charm and modern architecture.",
+        type: "Art",
+        duration: 30,
+      },
+      {
+        name: "Bonn Chocolate Delights",
+        price: 8,
+        emoji: "🍫",
+        description:
+          "Indulge your taste buds with a selection of handcrafted chocolates inspired by Bonn's local flavors and confectionery traditions.",
+        type: "Food",
+        duration: 15,
+      },
+      {
+        name: "Bonn Historical Walking Tour",
+        price: 40,
+        emoji: "🚶‍♂️",
+        description:
+          "Embark on an immersive guided walking tour through Bonn's historic streets, unraveling the city's fascinating past and hidden stories.",
+        type: "Experience",
+        duration: 120,
+      },
+      {
+        name: "Bonn Cityscape Keychain",
+        price: 6,
+        emoji: "🔑",
+        description:
+          "Carry a piece of Bonn with you wherever you go with this intricately designed keychain, featuring the city's iconic landmarks.",
+        type: "Accessories",
+        duration: 15,
+      },
+      {
+        name: "Bonn Botanical Gardens Notebook",
+        price: 12,
+        emoji: "🌺",
+        description:
+          "Jot down your thoughts and inspirations in this charming notebook adorned with vibrant illustrations of Bonn's beautiful Botanical Gardens.",
+        type: "Stationery",
+        duration: 30,
+      },
+    ],
   },
   // 3 - Suzhou
   {
@@ -662,6 +754,98 @@ export const shops = [
         emoji: "🏢",
       },
     ],
+    souvenirs: [
+      {
+        name: "Silk Blossoms Scarf",
+        price: 35,
+        emoji: "🌸",
+        description:
+          "Wrap yourself in the elegance of Suzhou's silk industry with this exquisite scarf adorned with delicate blossoms and intricate patterns.",
+        type: "Fashion",
+        duration: 45,
+      },
+      {
+        name: "Classical Garden Tea Set",
+        price: 50,
+        emoji: "🍵",
+        description:
+          "Savor the tradition of Suzhou's classical gardens with this tea set, featuring hand-painted motifs inspired by renowned garden designs.",
+        type: "Drinkware",
+        duration: 60,
+      },
+      {
+        name: "Suzhou Embroidery Artwork",
+        price: 80,
+        emoji: "🧵",
+        description:
+          "Admire the skill of Suzhou's renowned embroidery artisans with this stunning artwork, showcasing intricate stitches and vibrant colors.",
+        type: "Art",
+        duration: 90,
+      },
+      {
+        name: "Jasmine Perfume Oil",
+        price: 25,
+        emoji: "🌼",
+        description:
+          "Capture the alluring fragrance of Suzhou's famous jasmine flowers with this exquisite perfume oil, a sensory journey of floral bliss.",
+        type: "Beauty",
+        duration: 30,
+      },
+      {
+        name: "Suzhou Opera Mask Set",
+        price: 45,
+        emoji: "🎭",
+        description:
+          "Embrace the theatrical charm of Suzhou's opera traditions with this set of beautifully crafted opera masks, each representing a unique character.",
+        type: "Art",
+        duration: 60,
+      },
+      {
+        name: "Suzhou Silk Hand Fan",
+        price: 20,
+        emoji: "🌬️",
+        description:
+          "Stay cool in style with this elegant hand fan made from Suzhou silk, featuring intricate designs and a sturdy bamboo frame.",
+        type: "Accessories",
+        duration: 30,
+      },
+      {
+        name: "Suzhou Street Food Cookbook",
+        price: 15,
+        emoji: "🍲",
+        description:
+          "Embark on a culinary adventure with this cookbook filled with authentic recipes of Suzhou's vibrant street food scene, bringing the flavors of the city to your kitchen.",
+        type: "Books",
+        duration: 45,
+      },
+      {
+        name: "Suzhou Embroidered Slippers",
+        price: 30,
+        emoji: "🥿",
+        description:
+          "Step into comfort and elegance with these Suzhou embroidered slippers, featuring soft silk and intricate embroidery motifs inspired by local culture.",
+        type: "Fashion",
+        duration: 30,
+      },
+      {
+        name: "Suzhou Water Town Painting",
+        price: 65,
+        emoji: "🖌️",
+        description:
+          "Adorn your walls with the charm of Suzhou's picturesque water towns with this hand-painted artwork, capturing the idyllic beauty of the region.",
+        type: "Art",
+        duration: 90,
+      },
+      {
+        name: "Suzhou Silk Jewelry Pouch",
+        price: 12,
+        emoji: "💍",
+        description:
+          "Store your precious jewelry in this elegant silk pouch, embroidered with traditional Suzhou patterns, and keep your treasures safe in style.",
+        type: "Accessories",
+        duration: 15,
+      },
+    ],
   },
   // 4 - Lima
   {
@@ -756,6 +940,98 @@ export const shops = [
         price: 500000,
         tags: ["Landmark", "Park", "Recreation"],
         emoji: "🌳",
+      },
+    ],
+    souvenirs: [
+      {
+        name: "InkaTrek Backpack",
+        price: 45,
+        emoji: "🎒",
+        description:
+          "Embark on your own urban adventure with the stylish and durable InkaTrek Backpack, perfect for exploring the vibrant streets of Lima.",
+        type: "Accessories",
+        duration: 60,
+      },
+      {
+        name: "Pachamama Necklace",
+        price: 30,
+        emoji: "🌺",
+        description:
+          "Carry the spirit of Peru with you through the elegant Pachamama Necklace, inspired by the rich cultural heritage and natural beauty of Lima.",
+        type: "Jewelry",
+        duration: 15,
+      },
+      {
+        name: "Ceviche Masterclass",
+        price: 75,
+        emoji: "🍣",
+        description:
+          "Unleash your culinary creativity with a Ceviche Masterclass, where you'll learn to prepare this iconic Peruvian dish, influenced by Lima's coastal cuisine.",
+        type: "Experience",
+        duration: 120,
+      },
+      {
+        name: "Andean Breeze Shawl",
+        price: 55,
+        emoji: "🧣",
+        description:
+          "Wrap yourself in warmth and style with the Andean Breeze Shawl, showcasing traditional patterns inspired by the Andean highlands near Lima.",
+        type: "Apparel",
+        duration: 45,
+      },
+      {
+        name: "Architectural Marvels Puzzle",
+        price: 35,
+        emoji: "🧩",
+        description:
+          "Piece together Lima's iconic architectural marvels with this captivating puzzle, featuring renowned landmarks like the Huaca Pucllana and the Basilica of San Francisco.",
+        type: "Games",
+        duration: 90,
+      },
+      {
+        name: "Lima Nights Candle",
+        price: 20,
+        emoji: "🕯️",
+        description:
+          "Immerse your space in the enchanting scents of Lima's vibrant nightlife with the Lima Nights Candle, handcrafted with aromatic Peruvian essences.",
+        type: "Home Decor",
+        duration: 25,
+      },
+      {
+        name: "Incan Heritage Notebook",
+        price: 15,
+        emoji: "📔",
+        description:
+          "Jot down your thoughts and travel memories in the Incan Heritage Notebook, featuring beautiful illustrations inspired by the ancient Incan civilization.",
+        type: "Stationery",
+        duration: 30,
+      },
+      {
+        name: "Lima Street Art Print",
+        price: 40,
+        emoji: "🖼️",
+        description:
+          "Adorn your walls with the vibrant colors of Lima's street art scene, captured in a high-quality print that celebrates the city's urban creativity.",
+        type: "Art",
+        duration: 20,
+      },
+      {
+        name: "Peruvian Blend Coffee",
+        price: 25,
+        emoji: "☕",
+        description:
+          "Awaken your senses with the exquisite flavors of Peruvian Blend Coffee, sourced from the lush coffee plantations surrounding Lima.",
+        type: "Food & Beverage",
+        duration: 10,
+      },
+      {
+        name: "Huaca Pottery Set",
+        price: 50,
+        emoji: "🏺",
+        description:
+          "Experience the ancient art of pottery with the Huaca Pottery Set, inspired by the intricate designs found on archaeological artifacts near Lima.",
+        type: "Decorative",
+        duration: 40,
       },
     ],
   },
@@ -855,6 +1131,98 @@ export const shops = [
           "rooftop pool",
         ],
         emoji: "🏩",
+      },
+    ],
+    souvenirs: [
+      {
+        name: "Mayan Sunrise Tote Bag",
+        price: 25,
+        emoji: "👜",
+        description:
+          "Carry a piece of Flores with you wherever you go with the vibrant Mayan Sunrise Tote Bag, featuring intricate Mayan patterns inspired by Guatemala's rich heritage.",
+        type: "Accessories",
+        duration: 30,
+      },
+      {
+        name: "Jungle Adventure Hiking Shoes",
+        price: 75,
+        emoji: "🥾",
+        description:
+          "Embark on exciting jungle treks with confidence and style wearing the Jungle Adventure Hiking Shoes, designed for durability and comfort in the rugged terrains surrounding Flores.",
+        type: "Footwear",
+        duration: 60,
+      },
+      {
+        name: "Guatemalan Handwoven Hammock",
+        price: 60,
+        emoji: "🌴",
+        description:
+          "Relax in the ultimate comfort of a traditional Guatemalan Handwoven Hammock, handcrafted by skilled artisans using vibrant threads that represent the beauty of Flores' natural landscapes.",
+        type: "Home Decor",
+        duration: 45,
+      },
+      {
+        name: "Tikal Temple Puzzle",
+        price: 30,
+        emoji: "🧩",
+        description:
+          "Piece together the magnificent Tikal Temple with this captivating puzzle, showcasing the grandeur of one of Guatemala's most iconic archaeological sites near Flores.",
+        type: "Games",
+        duration: 90,
+      },
+      {
+        name: "Flora and Fauna Ceramic Mug",
+        price: 18,
+        emoji: "☕",
+        description:
+          "Savor your morning coffee in a delightful Flora and Fauna Ceramic Mug, adorned with vibrant illustrations of the unique plant and animal species found in the jungles surrounding Flores.",
+        type: "Drinkware",
+        duration: 30,
+      },
+      {
+        name: "Quetzal Feather Earrings",
+        price: 35,
+        emoji: "🪶",
+        description:
+          "Adorn yourself with the elegance of Quetzal Feather Earrings, inspired by the magnificent bird species that are native to the Flores region.",
+        type: "Jewelry",
+        duration: 15,
+      },
+      {
+        name: "Cacao Chocolate Gift Set",
+        price: 40,
+        emoji: "🍫",
+        description:
+          "Indulge in the rich flavors of Guatemalan cacao with the Cacao Chocolate Gift Set, featuring a selection of artisanal chocolates that highlight the country's renowned chocolate-making traditions.",
+        type: "Food & Beverage",
+        duration: 20,
+      },
+      {
+        name: "Guatemalan Textile Wall Hanging",
+        price: 55,
+        emoji: "🧵",
+        description:
+          "Adorn your walls with a captivating Guatemalan Textile Wall Hanging, meticulously woven with vibrant threads that showcase the artistry and cultural heritage of Flores.",
+        type: "Art",
+        duration: 25,
+      },
+      {
+        name: "Lake Petén Itzá Postcard Set",
+        price: 12,
+        emoji: "🌅",
+        description:
+          "Send a piece of Flores to your loved ones with the stunning Lake Petén Itzá Postcard Set, featuring breathtaking views of the picturesque lake and its surrounding landscapes.",
+        type: "Stationery",
+        duration: 10,
+      },
+      {
+        name: "Mayan Calendar Keychain",
+        price: 10,
+        emoji: "🗝️",
+        description:
+          "Carry a symbol of ancient Mayan wisdom with the Mayan Calendar Keychain, a miniature replica of the iconic calendar stone that represents Flores' deep historical roots.",
+        type: "Accessories",
+        duration: 5,
       },
     ],
   },

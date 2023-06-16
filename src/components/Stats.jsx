@@ -11,7 +11,12 @@ import {
   PriceChange,
   Upgrade,
 } from "@mui/icons-material"
-import { plural, cents, round1 } from "../utils/utils"
+import {
+  plural,
+  cents,
+  round1,
+  shortCents,
+} from "../utils/utils"
 import SouvenirShop from "./SouvenirShop"
 
 const Stats = ({
@@ -33,15 +38,15 @@ const Stats = ({
       <div className="grid grid-cols-1 gap-2">
         <div className="font-semibold icon-text text-2xl">
           <Payment />
-          <span>{cents(coins)}</span>
+          <span>{shortCents(coins)}</span>
         </div>
         <div className="icon-text">
           <AdsClick />
-          Clicking power: {cents(clickAmount)}{" "}
+          Clicking power: {shortCents(clickAmount)}{" "}
           {items.length < 1 ? null : (
             <span className="text-xs">
               ($1 base + (
-              {cents(upgradeCount * upgradeStrength)}
+              {shortCents(upgradeCount * upgradeStrength)}
               /click from upgrades x
               {round1(clickMultiplier)} from items))
             </span>
@@ -49,7 +54,7 @@ const Stats = ({
         </div>
         <div className="icon-text">
           <PriceChange />
-          Income: {cents(coinsPerSec)}/s
+          Income: {shortCents(coinsPerSec)}/s
         </div>
         <div className="icon-text">
           <Gite /> {buildingCount}{" "}

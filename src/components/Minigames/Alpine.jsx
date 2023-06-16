@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Circle, Money } from "@mui/icons-material"
 
-const GameComponent = () => {
+const Alpine = () => {
   const [score, setScore] = useState(0)
   const [coins, setCoins] = useState([])
   const [gameOver, setGameOver] = useState(false)
@@ -88,4 +88,4 @@ const GameComponent = () => {
   )
 }
 
-export default GameComponent
+export default Alpine

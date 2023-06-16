@@ -95,7 +95,15 @@ function Properties({
                     className={`ml-auto text-xs flex items-center gap-1 p-1 bg-slate-300 text-green-600
                   `}
                   >
-                    <MonetizationOn fontSize="1rem" />
+                    <MonetizationOn
+                      fontSize="1rem"
+                      className="animate-spin"
+                      style={{
+                        animation:
+                          "slow-spin 2s linear infinite",
+                        animationName: "spin",
+                      }}
+                    />
                     {`+${cents(
                       getPropertyIncome(property.price)
                     )}/s`}

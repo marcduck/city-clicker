@@ -94,7 +94,7 @@ section {
     @apply text-slate-600;
   }
 
-  @apply flex gap-3  items-center;
+  @apply flex gap-2 items-center;
 }
 
 .interface {
@@ -107,6 +107,14 @@ section {
   & > * {
     // @apply border border-slate-700;
   }
+}
+
+.souvenir-button {
+  @apply py-0.5 px-3 w-32;
+}
+
+.flex-center {
+  @apply flex items-center gap-1 justify-center;
 }
 
 @layer utilities {
