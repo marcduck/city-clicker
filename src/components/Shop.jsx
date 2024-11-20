@@ -7,15 +7,13 @@ import { getFlagEmoji } from "../utils/utils"
 import Modal from "./Modal"
 import ShopItems from "./ShopItems"
 import Shopkeeper from "./Shopkeeper"
+import { useBearStore } from "../utils/store"
+import { cities } from "../Clicker"
 
 function Shop({
   selectedCity,
-  coins,
-  setCoins,
-  cities,
-  items,
-  setItems,
 }) {
+  const { coins, subtractCoins, items, setItems } = useBearStore();
   let fixedIndex = Math.min(selectedCity, shops.length - 1)
   let shop = shops[fixedIndex]
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -47,10 +45,6 @@ function Shop({
             {/* {console.log(shop.items)} */}
             <ShopItems
               array={shop.items}
-              coins={coins}
-              items={items}
-              setCoins={setCoins}
-              setItems={setItems}
             />
           </div>
         </div>

@@ -5,6 +5,8 @@ import {
   getFlagEmoji,
   getNextArrayItem,
 } from "../utils/utils"
+import { useBearStore } from "../utils/store"
+import { cities } from "../Clicker"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
@@ -31,12 +33,10 @@ function getTab(label, disabled, title = null, cityName) {
 }
 
 function Graphic({
-  cityLevel,
-  buildingCount,
-  cities,
   selectedCity,
   setSelectedCity,
 }) {
+  const { cityLevel, buildingCount } = useBearStore();
   function handleTabChange(index) {
     setSelectedCity(index)
   }

@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react"
 import { AttachMoney, Sell } from "@mui/icons-material"
 import Tooltip from "./Tooltip"
 import { cents, getItemSum } from "../utils/utils"
-function Inventory({ items }) {
+import { useBearStore } from "../utils/store";
+function Inventory({  }) {
+
+  const { items } = useBearStore();
+
   const [itemSum, setItemSum] = useState(0)
   const [hoveredItemId, setHoveredItemId] = useState(null)
 

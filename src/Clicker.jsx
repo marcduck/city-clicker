@@ -1,50 +1,41 @@
-import React, {
-  useEffect,
-  useState,
-  useRef,
-  useMemo,
-} from "react"
-import "flowbite"
-import { gsap } from "gsap"
+import React, { useEffect, useState, useRef, useMemo } from "react";
+import "flowbite";
+import { gsap } from "gsap";
 
 // Components
-import Graphic from "./components/Graphic"
-import ShopWindow from "./components/ShopWindow"
-import SouvenirShop from "./components/SouvenirShop"
-import Toast from "./components/Toast"
-import ButtonGroup from "./components/ButtonGroup"
-import Stats from "./components/Stats"
-import { HolidayVillage } from "@mui/icons-material"
-import Inventory from "./components/Inventory"
-import Properties from "./components/Properties"
+import Graphic from "./components/Graphic";
+import ShopWindow from "./components/ShopWindow";
+import SouvenirShop from "./components/SouvenirShop";
+import Toast from "./components/Toast";
+import ButtonGroup from "./components/ButtonGroup";
+import Stats from "./components/Stats";
+import { HolidayVillage } from "@mui/icons-material";
+import Inventory from "./components/Inventory";
+import Properties from "./components/Properties";
 
 import {
   initializeObjectFromStorage,
   initializeFromStorage,
   getPropertyIncome,
   canAfford,
-} from "./utils/utils"
-import {
-  DragDropContext,
-  Draggable,
-  Droppable,
-} from "react-beautiful-dnd"
-import Window from "./components/Window"
-import GameComponent from "./components/Minigames/Alpine"
-import Alpine from "./components/Minigames/Alpine"
-import Lakeview from "./components/Minigames/Lakeview"
-import MemoryGame from "./components/Minigames/MemoryGame"
+  TagToPrompt,
+} from "./utils/utils";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import Window from "./components/Window";
+import GameComponent from "./components/Minigames/Alpine";
+import Alpine from "./components/Minigames/Alpine";
+import Lakeview from "./components/Minigames/Lakeview";
+import MemoryGame from "./components/Minigames/MemoryGame";
 
-// Game  variables
-const M = 1.15
-const clickPriceMultiplier = 0.00004
+import { baseCosts, clickPriceMultiplier, M, useBearStore } from "./utils/store";
 
-export let baseCosts = {
-  upgrade: 8,
-  building: 35,
-}
 
-let cities = [
+
+
+
+
+
+export const cities = [
   {
     name: "Lucerne",
     img: "city-swiss",
@@ -81,195 +72,101 @@ let cities = [
     buildingsRequired: 200,
     country: "GT",
   },
-]
+];
 
 function Clicker() {
-  function buyBuilding() {
-    if (!canAfford(coins, buildingPrice)) {
-      return
-    }
 
-    setCoins((coins) => coins - buildingPrice)
-    setBuildingCount((buildingCount) => buildingCount + 1)
-  }
 
-  function buyUpgrade() {
-    if (!canAfford(coins, upgradePrice)) {
-      return
-    }
+  // Zustand state
+  const {
+  coins,
+  increaseCoins,
+  subtractCoins,
+  tokens,
+  increaseTokens, 
+  subtractTokens,
+  elapsedTime,
+  coinsPerSec,
+  clickAmount,
+  upgradeStrength,
+  autoClickerAmount,
+  upgradeCount,
+  upgradePrice,
+  buildingCount,
+  buildingPrice,
+  cityLevel,
+  shopStatus,
+  clickMultiplier,
+  items,
+  ownedProperties,
+  ownedSouvenirs,
+  setElapsedTime,
+  setCoinsPerSec,
+  setClickAmount,
+  setUpgradeStrength,
+  setAutoClickerAmount,
+  setUpgradeCount,
+  setUpgradePrice,
+  setBuildingCount,
+  setBuildingPrice,
+  setCityLevel,
+  setShopStatus,
+  setClickMultiplier,
+  setItems,
+  setOwnedProperties,
+  setOwnedSouvenirs,
+  buyBuilding,
+  buyUpgrade,
+  handleCollect,
+  updateCoinsPerSec,
+  updateClickAmount,
+  updateClickMultiplier
+} = useBearStore();
 
-    setCoins((coins) => coins - upgradePrice)
-    setUpgradeCount((upgradeCount) => upgradeCount + 1)
-  }
+const [selectedCity, setSelectedCity] = useState(0);
 
-  // Game variables
 
-  const [elapsedTime, setElapsedTime] =
-    initializeFromStorage("elapsedTime", 0)
-  const [coins, setCoins] = initializeFromStorage(
-    "coins",
-    0
-  )
-  const [tokens, setTokens] = initializeFromStorage(
-    "tokens",
-    0
-  )
-  const [coinsPerSec, setCoinsPerSec] =
-    initializeFromStorage("coinsPerSec", 0)
-  const [clickAmount, setClickAmount] =
-    initializeFromStorage("clickAmount", 1)
-  const [upgradeStrength, setUpgradeStrength] =
-    initializeFromStorage("upgradeStrength", 0.5)
-  const [autoClickerAmount, setAutoClickerAmount] =
-    initializeFromStorage("autoClickerAmount", 1.5)
-  const [upgradeCount, setUpgradeCount] =
-    initializeFromStorage("upgradeCount", 0)
-  const [upgradePrice, setUpgradePrice] =
-    initializeFromStorage("upgradePrice", baseCosts.upgrade)
-  const [buildingCount, setBuildingCount] =
-    initializeFromStorage("buildingCount", 0)
-  const [buildingPrice, setBuildingPrice] =
-    initializeFromStorage(
-      "buildingPrice",
-      baseCosts.building
-    )
-  const [cityLevel, setCityLevel] = initializeFromStorage(
-    "cityLevel",
-    0
-  )
-  const [shopStatus, setShopStatus] = initializeFromStorage(
-    "shopStatus",
-    1
-  )
-  const [selectedCity, setSelectedCity] = useState(0)
-  const [items, setItems] = initializeObjectFromStorage(
-    "items",
-    []
-  )
-  const [clickMultiplier, setClickMultiplier] =
-    initializeFromStorage("clickMultiplier", 1)
-  const [ownedProperties, setOwnedProperties] =
-    initializeObjectFromStorage("ownedProperties", {})
-  const [ownedSouvenirs, setOwnedSouvenirs] =
-    initializeObjectFromStorage("ownedSouvenirs", {})
+
 
   useMemo(() => {
     const totalPrice = items
       .map((item) => item.price)
-      .reduce((a, b) => a + b, 0)
-    const newMultiplier =
-      1 + totalPrice * clickPriceMultiplier
-    setClickMultiplier(newMultiplier)
-  }, [items])
+      .reduce((a, b) => a + b, 0);
+    const newMultiplier = 1 + totalPrice * clickPriceMultiplier;
+    setClickMultiplier(newMultiplier);
+  }, [items]);
 
   // Animate toast
-  const [showToast, setShowToast] = useState(false)
-  const [toastMessage, setToastMessage] = useState("")
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
   function getAdjustedPrice(baseCost, count) {
-    return baseCost * Math.pow(M, count)
+    return baseCost * Math.pow(M, count);
   }
 
   // Calculated values
 
   // Coins per Sec / buildings
   useMemo(() => {
-    const propertyTotalValue = Object.values(
-      ownedProperties
-    ).reduce((a, b) => a + b, 0)
-    const propertyIncome = getPropertyIncome(
-      propertyTotalValue
-    )
-    setCoinsPerSec(
-      autoClickerAmount * buildingCount + propertyIncome
-    )
-    setBuildingPrice(
-      getAdjustedPrice(baseCosts.building, buildingCount)
-    )
-  }, [autoClickerAmount, buildingCount, ownedProperties])
+    const propertyTotalValue = Object.values(ownedProperties).reduce(
+      (a, b) => a + b,
+      0
+    );
+    const propertyIncome = getPropertyIncome(propertyTotalValue);
+    setCoinsPerSec(autoClickerAmount * buildingCount + propertyIncome);
+    setBuildingPrice(getAdjustedPrice(baseCosts.building, buildingCount));
+  }, [autoClickerAmount, buildingCount, ownedProperties]);
 
   // Click amount / upgrades
   useMemo(() => {
-    setClickAmount(
-      1 + upgradeCount * upgradeStrength * clickMultiplier
-    )
-    setUpgradePrice(
-      getAdjustedPrice(baseCosts.upgrade, upgradeCount)
-    )
-  }, [
-    upgradeCount,
-    upgradeStrength,
-    clickMultiplier,
-    items,
-  ])
+    setClickAmount(1 + upgradeCount * upgradeStrength * clickMultiplier);
+    setUpgradePrice(getAdjustedPrice(baseCosts.upgrade, upgradeCount));
+  }, [upgradeCount, upgradeStrength, clickMultiplier, items]);
 
-  // City level / city unlock
-  useMemo(() => {
-    let nextCityBuildingsRequired =
-      cities[Math.min(cityLevel + 1, cities.length)]
-        .buildingsRequired
-    if (
-      cityLevel + 1 < cities.length &&
-      nextCityBuildingsRequired === buildingCount
-    ) {
-      setToastMessage(
-        `New city unlocked: ${cities[cityLevel + 1].name}!`
-      )
-      setShowToast(true)
-      setCityLevel((cityLevel) => cityLevel + 1)
-    }
-  }, [buildingCount])
+
 
   // Localstorage saving
 
-  useMemo(() => {
-    localStorage.setItem("elapsedTime", elapsedTime)
-  }, [elapsedTime])
-  useMemo(() => {
-    localStorage.setItem("coins", coins)
-  }, [coins])
-  useMemo(() => {
-    localStorage.setItem("tokens", tokens)
-  }, [tokens])
-  useMemo(() => {
-    localStorage.setItem("coinsPerSec", coinsPerSec)
-  }, [coinsPerSec])
-  useMemo(() => {
-    localStorage.setItem("clickAmount", clickAmount)
-  }, [clickAmount])
-  useMemo(() => {
-    localStorage.setItem("upgradeStrength", upgradeStrength)
-  }, [upgradeStrength])
-  useMemo(() => {
-    localStorage.setItem(
-      "autoClickerAmount",
-      autoClickerAmount
-    )
-  }, [autoClickerAmount])
-  useMemo(() => {
-    localStorage.setItem("upgradeCount", upgradeCount)
-  }, [upgradeCount])
-  useMemo(() => {
-    localStorage.setItem("upgradePrice", upgradePrice)
-  }, [upgradePrice])
-  useMemo(() => {
-    localStorage.setItem("buildingCount", buildingCount)
-  }, [buildingCount])
-  useMemo(() => {
-    localStorage.setItem("buildingPrice", buildingPrice)
-  }, [buildingPrice])
-  useMemo(() => {
-    localStorage.setItem("cityLevel", cityLevel)
-  }, [cityLevel])
-  useMemo(() => {
-    localStorage.setItem("shopStatus", shopStatus)
-  }, [shopStatus])
-  useMemo(() => {
-    localStorage.setItem("clickMultiplier", clickMultiplier)
-  }, [clickMultiplier])
-  useMemo(() => {
-    localStorage.setItem("items", JSON.stringify(items))
-  }, [items])
 
   // --
   // Game loop
@@ -279,42 +176,29 @@ function Clicker() {
     const interval = setInterval(() => {
       // console.log(coins)
 
-      setCoins((coins) => coins + coinsPerSec)
-      setElapsedTime((elapsedTime) => elapsedTime + 1)
-    }, 1000)
+      increaseCoins(coinsPerSec);
+      setElapsedTime((elapsedTime) => elapsedTime + 1);
+    }, 1000);
 
-    return () => clearInterval(interval)
-  }, [elapsedTime])
+    return () => clearInterval(interval);
+  }, [elapsedTime]);
 
   // Event handlers
-  function handleCollect() {
-    setCoins(coins + clickAmount)
-  }
 
-  const buttonColors = {
-    collect: "bg-emerald-700 border-emerald-800",
-    build: "bg-blue-700 border-blue-800",
-    upgrade: "bg-purple-800 border-purple-900",
-  }
+
+
 
   const handleDrop = (droppedItem) => {
     // Ignore drop outside droppable container
-    if (!droppedItem.destination) return
-    const updatedList = [...itemList]
+    if (!droppedItem.destination) return;
+    const updatedList = [...itemList];
     // Remove dragged item
-    const [reorderedItem] = updatedList.splice(
-      droppedItem.source.index,
-      1
-    )
+    const [reorderedItem] = updatedList.splice(droppedItem.source.index, 1);
     // Add dropped item
-    updatedList.splice(
-      droppedItem.destination.index,
-      0,
-      reorderedItem
-    )
+    updatedList.splice(droppedItem.destination.index, 0, reorderedItem);
     // Update State
-    setItemList(updatedList)
-  }
+    setItemList(updatedList);
+  };
 
   const dashboardComponents = [
     {
@@ -322,10 +206,7 @@ function Clicker() {
       noPadding: true,
       component: (
         <Graphic
-          cityLevel={cityLevel}
           highestCity={cities[cityLevel]}
-          buildingCount={buildingCount}
-          cities={cities}
           selectedCity={selectedCity}
           setSelectedCity={setSelectedCity}
         />
@@ -335,10 +216,8 @@ function Clicker() {
       name: "Stats",
       component: (
         <Stats
-          coins={coins}
           clickAmount={clickAmount}
           items={items}
-          cities={cities}
           upgradeCount={upgradeCount}
           upgradeStrength={upgradeStrength}
           clickMultiplier={clickMultiplier}
@@ -353,17 +232,6 @@ function Clicker() {
       noPadding: true,
       component: (
         <ButtonGroup
-          clickAmount={clickAmount}
-          handleCollect={handleCollect}
-          buttonColors={buttonColors}
-          autoClickerAmount={autoClickerAmount}
-          buyBuilding={buyBuilding}
-          buildingPrice={buildingPrice}
-          coins={coins}
-          upgradeStrength={upgradeStrength}
-          clickMultiplier={clickMultiplier}
-          buyUpgrade={buyUpgrade}
-          upgradePrice={upgradePrice}
         />
       ),
     },
@@ -372,10 +240,7 @@ function Clicker() {
       component: (
         <div className="shop">
           <ShopWindow
-            coins={coins}
-            setCoins={setCoins}
             selectedCity={selectedCity}
-            cities={cities}
             items={items}
             setItems={setItems}
             shopStatus={shopStatus}
@@ -388,11 +253,7 @@ function Clicker() {
       name: "Properties",
       component: (
         <Properties
-          coins={coins}
-          setCoins={setCoins}
           selectedCity={selectedCity}
-          ownedProperties={ownedProperties}
-          setOwnedProperties={setOwnedProperties}
         />
       ),
     },
@@ -401,53 +262,124 @@ function Clicker() {
       noPadding: true,
       component: (
         <SouvenirShop
-          setOwnedSouvenirs={setOwnedSouvenirs}
-          ownedSouvenirs={ownedSouvenirs}
           selectedCity={selectedCity}
-          tokens={tokens}
-          setTokens={setTokens}
         />
       ),
     },
-    // {
-    //   name: "Alpine",
-    //   noPadding: true,
-    //   component: <Alpine />,
-    // },
-    // {
-    //   name: "Lakeview",
-    //   noPadding: true,
-    //   component: <Lakeview />,
-    // },
+
     {
       name: "Memory Game",
       component: (
         <MemoryGame
-          tokens={tokens}
-          setTokens={setTokens}
-          ownedSouvenirs={ownedSouvenirs}
         />
       ),
     },
     {
       name: "Inventory",
-      component: <Inventory items={items} />,
+      component: <Inventory />,
     },
-  ]
+  ];
 
   const [itemList, setItemList] = useState(
     dashboardComponents.map((component) => component.name)
-  )
+  );
+
+  // Add new state for active section
+  const [activeSection, setActiveSection] = useState("");
+  
+  // Add refs for sections
+  const sectionRefs = useRef({});
+
+  // Update the intersection observer setup
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 1.0, // Only trigger when section is fully visible
+      rootMargin: "-45% 0px -45% 0px" // This creates a band in the middle of the viewport
+    };
+
+    const observerCallback = (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.getAttribute("data-section"));
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    Object.values(sectionRefs.current).forEach(ref => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => observer.disconnect();
+  }, [itemList]);
+
+  // Update the scroll behavior
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const windowHeight = window.innerHeight;
+      const elementHeight = element.offsetHeight;
+      
+      // Calculate position to center the element
+      const offset = (windowHeight - elementHeight) / 2;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
+  };
+
+  // Update the Sidebar component
+  const Sidebar = () => (
+    <div className="fixed left-4 top-1/2 -translate-y-1/2 bg-white rounded-lg shadow-lg p-4 hidden lg:block">
+      <nav>
+        <ul className="space-y-2">
+          {itemList.map((itemName) => (
+            <li key={`nav-${itemName}`}>
+              <button
+                onClick={() => scrollToSection(itemName)}
+                className={`block w-full text-left px-3 py-2 rounded transition-colors ${
+                  activeSection === itemName
+                    ? "bg-slate-200 text-slate-900"
+                    : "text-slate-600 hover:bg-slate-100"
+                }`}
+              >
+                {itemName}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  );
+
+  function BearCounter() {
+    const bears = useBearStore((state) => state.bears);
+    return <h1>{bears} around here ...</h1>;
+  }
+
+  function Controls() {
+    const increasePopulation = useBearStore(
+      (state) => state.increasePopulation
+    );
+    return <button onClick={increasePopulation}>one up</button>;
+  }
 
   return (
     <section className=" bg-slate-200 flex-grow">
+      <Sidebar />
       <h1 className="flex gap-2 items-center text-4xl font-bold mb-4">
-        <HolidayVillage
-          fontSize="auto"
-          className="text-slate-700"
-        />
+        <HolidayVillage fontSize="auto" className="text-slate-700" />
         <span className="text-slate-800">City Clicker</span>
       </h1>
+      {/* <div>
+        <BearCounter />
+        <Controls />
+      </div> */}
       <Toast
         setShowToast={setShowToast}
         showToast={showToast}
@@ -458,16 +390,14 @@ function Clicker() {
           <Droppable droppableId="list-container">
             {(provided) => (
               <div
-                className="columns-1 lg:columns-2 interface"
+                className="flex flex-col space-y-2 max-w-[600px] mx-auto interface" // Add left padding for sidebar
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
                 {itemList.map((itemName, index) => {
-                  const component =
-                    dashboardComponents.find(
-                      (component) =>
-                        component.name === itemName
-                    )
+                  const component = dashboardComponents.find(
+                    (component) => component.name === itemName
+                  );
                   return (
                     <Draggable
                       key={itemName}
@@ -477,7 +407,12 @@ function Clicker() {
                       {(provided) => (
                         <div
                           className="item-container"
-                          ref={provided.innerRef}
+                          ref={(el) => {
+                            provided.innerRef(el);
+                            sectionRefs.current[itemName] = el;
+                          }}
+                          data-section={itemName}
+                          id={itemName}
                           {...provided.draggableProps}
                         >
                           <Window
@@ -491,7 +426,7 @@ function Clicker() {
                         </div>
                       )}
                     </Draggable>
-                  )
+                  );
                 })}
                 {provided.placeholder}
               </div>
@@ -501,14 +436,14 @@ function Clicker() {
         {/* Toast message - New city notification */}
       </div>
 
-      <div className="bottom gap-4 flex">
-        {/* <button className='bg-slate-400 py-0.5 px-1.5' onClick={() => window.localStorage.clear()}>Clear save</button> */}
-        {/* <button className='bg-slate-400 py-0.5 px-1.5' onClick={() => setCoins(coins + 1_000_000)}>Add money</button> */}
-        {/* <button className='bg-slate-400 py-0.5 px-1.5' onClick={() => {setShowToast(true), setToastMessage(`New city unlocked: ${cities[cityLevel].name}!`)}}>Show toast</button> */}
-        {/* <TagToPrompt /> */}
-      </div>
+      {/* <div className="bottom gap-4 flex">
+        <button className='bg-slate-400 py-0.5 px-1.5' onClick={() => window.localStorage.clear()}>Clear save</button>
+        <button className='bg-slate-400 py-0.5 px-1.5' onClick={() => increaseCoins(1_000_000)}>Add money</button>
+        <button className='bg-slate-400 py-0.5 px-1.5' onClick={() => {setShowToast(true), setToastMessage(`New city unlocked: ${cities[cityLevel].name}!`)}}>Show toast</button>
+        <TagToPrompt />
+      </div> */}
     </section>
-  )
+  );
 }
 
-export default Clicker
+export default Clicker;

@@ -9,17 +9,17 @@ import {
 import { Sell, MonetizationOn } from "@mui/icons-material"
 import { useEffect } from "react"
 import ScrollContainer from "react-indiana-drag-scroll"
+import { useBearStore } from "../utils/store"
+
 function Properties({
   selectedCity,
-  coins,
-  setCoins,
-  setOwnedProperties,
-  ownedProperties,
 }) {
+  const { coins, subtractCoins, ownedProperties, setOwnedProperties } = useBearStore();
+
   function buyProperty(
     property,
     coins,
-    setCoins,
+    subtractCoins,
     setOwnedProperties,
     ownedProperties
   ) {
@@ -30,21 +30,13 @@ function Properties({
     if (isPropertyOwned(property)) {
       return
     }
-    setCoins(coins - property.price)
-    console.log({ ownedProperties })
+    subtractCoins(property.price)
     const deed = {
       [property.name]: property.price,
     }
     setOwnedProperties({ ...ownedProperties, ...deed })
-    console.log(ownedProperties)
   }
 
-  useEffect(() => {
-    localStorage.setItem(
-      "ownedProperties",
-      JSON.stringify(ownedProperties)
-    )
-  }, [ownedProperties])
 
   function isPropertyOwned(property) {
     if (ownedProperties[property.name]) {
@@ -71,7 +63,7 @@ function Properties({
                       buyProperty(
                         property,
                         coins,
-                        setCoins,
+                        subtractCoins,
                         setOwnedProperties,
                         ownedProperties
                       )

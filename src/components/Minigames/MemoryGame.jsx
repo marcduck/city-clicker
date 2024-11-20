@@ -6,6 +6,7 @@ import {
 } from "@mui/icons-material"
 import React, { useState, useEffect, useMemo } from "react"
 import { plural } from "../../utils/utils"
+import { useBearStore } from "../../utils/store";
 
 // Define all available emojis
 const allEmojis = [
@@ -43,12 +44,13 @@ const allEmojis = [
   "🕷",
 ]
 
-function MemoryGame({ tokens, setTokens, ownedSouvenirs }) {
+function MemoryGame({  }) {
+  const { tokens, ownedSouvenirs, increaseTokens } = useBearStore();
+
   const [gridRows, setGridRows] = useState(4) // Number of rows
   const [gridCols, setGridCols] = useState(4) // Number of columns
-  const [reward, setReward] = useState(
-    getRewards(ownedSouvenirs)
-  )
+  const reward = useMemo(() => getRewards(ownedSouvenirs), [ownedSouvenirs]);
+
 
   let gridSize = gridRows * gridCols
 
@@ -115,7 +117,8 @@ function MemoryGame({ tokens, setTokens, ownedSouvenirs }) {
   useMemo(() => {
     if (score >= gridSize) {
       setGameOver("win")
-      setTokens(tokens + 1)
+      const payout = Math.max(1, ownedSouvenirs?.length || 0)
+      increaseTokens(payout)
       resetGame()
     }
 
@@ -142,12 +145,13 @@ function MemoryGame({ tokens, setTokens, ownedSouvenirs }) {
   }, [currentCards])
 
   return (
-    <div>
-      <div className="grid-cols-4 grid gap-2 max-w-sm mx-auto justify-center">
+    <div className="flex flex-col items-center gap-4">
+      <div className={`grid gap-2 w-full max-w-sm`} 
+           style={{ gridTemplateColumns: `repeat(${gridCols}, 1fr)` }}>
         {shuffledEmojis.map((emoji, index) => (
           <div
-            className={` rounded aspect-square flex select-none cursor-pointer 
-              items-center justify-center text-2xl shadow transition duration-300  ${
+            className={`rounded aspect-square flex select-none cursor-pointer 
+              items-center justify-center text-2xl shadow transition duration-300 ${
                 completed.includes(emoji)
                   ? "bg-emerald-100"
                   : currentCards.includes(index)
@@ -166,33 +170,23 @@ function MemoryGame({ tokens, setTokens, ownedSouvenirs }) {
           </div>
         ))}
       </div>
-      <div className="flex flex-col md:flex-row md:gap-6 text-sm justify-center mt-4 ">
-        <p className="icon-text gap-1">
-          <Games fontSize="1rem" /> Moves remaining:{" "}
-          <span className="font-bold">
-            {maxMoves - moves}
-          </span>
+      <div className="flex flex-col md:flex-row md:gap-6 gap-2 text-sm items-center">
+        <p className="icon-text flex items-center gap-1">
+          <Games fontSize="small" /> 
+          Moves remaining: <span className="font-bold">{maxMoves - moves}</span>
         </p>
-        <p className="icon-text">
-          <Score fontSize="1rem" />
-          Score:{" "}
-          <span className="font-bold">
-            {score}/{gridSize}
-          </span>
+        <p className="icon-text flex items-center gap-1">
+          <Score fontSize="small" />
+          Score: <span className="font-bold">{score}/{gridSize}</span>
         </p>
-        <p className="icon-text">
-          <PointOfSale fontSize="1rem" />
-          Reward amount:{" "}
-          <span>
-            <span className="font-bold">{reward}</span>{" "}
-            {plural("token", reward)}
-          </span>
+        <p className="icon-text flex items-center gap-1">
+          <PointOfSale fontSize="small" />
+          Reward amount: <span className="font-bold">{reward}</span> {plural("token", reward)}
         </p>
-        {tokens && (
-          <p className="icon-text transition">
-            <Token fontSize="1rem" />
-            Tokens:{" "}
-            <span className="font-bold">{tokens}</span>
+        {tokens >= 1 && (
+          <p className="icon-text flex items-center gap-1">
+            <Token fontSize="small" />
+            Tokens: <span className="font-bold">{tokens}</span>
           </p>
         )}
       </div>

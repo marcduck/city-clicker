@@ -18,21 +18,12 @@ import {
   shortCents,
 } from "../utils/utils"
 import SouvenirShop from "./SouvenirShop"
+import { useBearStore } from "../utils/store"
 
 const Stats = ({
-  coins,
-  clickAmount,
-  items,
-  upgradeCount,
-  upgradeStrength,
-  clickMultiplier,
-  coinsPerSec,
-  buildingCount,
-  cityLevel,
-  cities,
-  selectedCity,
-  setSelectedCity,
 }) => {
+
+  const { coins, clickAmount, items, upgradeCount, upgradeStrength, clickMultiplier, coinsPerSec, buildingCount } = useBearStore()
   return (
     <div className="p-6 bg-slate-100">
       <div className="grid grid-cols-1 gap-2">

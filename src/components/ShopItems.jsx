@@ -5,19 +5,17 @@ import {
   isAffordableDiv,
   isAffordableText,
 } from "../utils/utils"
+import { useBearStore } from "../utils/store"
 
 export default function ShopItems({
   array,
-  coins,
-  items,
-  setCoins,
-  setItems,
 }) {
-  function buyItem(coins, item, items, setCoins, setItems) {
+  const { coins, items, subtractCoins, setItems } = useBearStore()
+  function buyItem(coins, item, items, subtractCoins, setItems) {
     if (!canAfford(coins, item.price)) {
       return
     }
-    setCoins((coins) => coins - item.price)
+    subtractCoins(item.price)
     setItems(items.concat(item))
   }
 
@@ -35,7 +33,7 @@ export default function ShopItems({
           ${isAffordableDiv(item.price, coins)}`}
         title={item.description}
         onClick={() =>
-          buyItem(coins, item, items, setCoins, setItems)
+          buyItem(coins, item, items, subtractCoins, setItems)
         }
       >
         <div

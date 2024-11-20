@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react"
 import { shops } from "../utils/shops"
 import { ShoppingCart } from "@mui/icons-material"
+import { useBearStore } from "../utils/store";
 
 function SouvenirShop({
   selectedCity,
-  ownedSouvenirs,
-  setOwnedSouvenirs,
-  tokens,
-  setTokens,
 }) {
+
+  const { tokens, subtractTokens, ownedSouvenirs, setOwnedSouvenirs } = useBearStore();
+
   function buySouvenir(souvenir) {
     if (tokens < souvenir.price) {
       return
@@ -18,7 +18,7 @@ function SouvenirShop({
       return
     }
 
-    setTokens(tokens - souvenir.price)
+    subtractTokens(souvenir.price)
     setOwnedSouvenirs({
       ...ownedSouvenirs,
       [souvenir.name]: souvenir,
