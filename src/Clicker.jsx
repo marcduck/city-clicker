@@ -9,7 +9,7 @@ import SouvenirShop from "./components/SouvenirShop";
 import Toast from "./components/Toast";
 import ButtonGroup from "./components/ButtonGroup";
 import Stats from "./components/Stats";
-import { HolidayVillage } from "@mui/icons-material";
+import { HolidayVillage, LocationCity } from "@mui/icons-material";
 import Inventory from "./components/Inventory";
 import Properties from "./components/Properties";
 
@@ -20,7 +20,6 @@ import {
   canAfford,
   TagToPrompt,
 } from "./utils/utils";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import Window from "./components/Window";
 import GameComponent from "./components/Minigames/Alpine";
 import Alpine from "./components/Minigames/Alpine";
@@ -203,12 +202,22 @@ const [selectedCity, setSelectedCity] = useState(0);
   const dashboardComponents = [
     {
       name: "Cities",
+      icon: <LocationCity />,
       noPadding: true,
       component: (
         <Graphic
           highestCity={cities[cityLevel]}
           selectedCity={selectedCity}
           setSelectedCity={setSelectedCity}
+        />
+      ),
+    },
+    {
+      name: "Buttons",
+      hideTitle: true,
+      noPadding: true,
+      component: (
+        <ButtonGroup
         />
       ),
     },
@@ -226,15 +235,7 @@ const [selectedCity, setSelectedCity] = useState(0);
         />
       ),
     },
-    {
-      name: "Buttons",
-      hideTitle: true,
-      noPadding: true,
-      component: (
-        <ButtonGroup
-        />
-      ),
-    },
+
     {
       name: "Shop",
       component: (
@@ -290,29 +291,83 @@ const [selectedCity, setSelectedCity] = useState(0);
   // Add refs for sections
   const sectionRefs = useRef({});
 
+  // Add a mount state
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Add initial mount effect
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   // Update the intersection observer setup
   useEffect(() => {
+    if (!isMounted) return;
+
     const observerOptions = {
-      threshold: 1.0, // Only trigger when section is fully visible
-      rootMargin: "-45% 0px -45% 0px" // This creates a band in the middle of the viewport
+      threshold: [0.1, 0.5, 0.9], // Multiple thresholds to better detect visibility
+      rootMargin: "-45% 0px -45% 0px"
     };
 
     const observerCallback = (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.getAttribute("data-section"));
-        }
-      });
+      // Find the most visible section
+      const visibleEntries = entries.filter(entry => entry.isIntersecting);
+      if (visibleEntries.length > 0) {
+        // Sort by intersection ratio and pick the most visible one
+        const mostVisible = visibleEntries.reduce((prev, current) => {
+          return (prev.intersectionRatio > current.intersectionRatio) ? prev : current;
+        });
+        
+        const newActiveSection = mostVisible.target.getAttribute("data-section");
+        console.log("Setting active section:", newActiveSection); // Debug log
+        setActiveSection(newActiveSection);
+      }
     };
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
 
+    // Log all sections being observed
+    console.log("Current sections:", Object.keys(sectionRefs.current));
+    
     Object.values(sectionRefs.current).forEach(ref => {
-      if (ref) observer.observe(ref);
+      if (ref) {
+        observer.observe(ref);
+        console.log("Observing section:", ref.getAttribute("data-section"));
+      }
     });
 
+    // Initial check for visible section
+    const checkInitialVisibility = () => {
+      const windowHeight = window.innerHeight;
+      const middleY = windowHeight / 2;
+
+      let closestSection = null;
+      let closestDistance = Infinity;
+
+      Object.values(sectionRefs.current).forEach(ref => {
+        if (ref) {
+          const rect = ref.getBoundingClientRect();
+          const sectionMiddle = rect.top + (rect.height / 2);
+          const distance = Math.abs(sectionMiddle - middleY);
+          
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            closestSection = ref;
+          }
+        }
+      });
+
+      if (closestSection) {
+        const sectionId = closestSection.getAttribute("data-section");
+        console.log("Initial active section:", sectionId); // Debug log
+        setActiveSection(sectionId);
+      }
+    };
+
+    // Run initial check after a short delay to ensure DOM is ready
+    setTimeout(checkInitialVisibility, 100);
+
     return () => observer.disconnect();
-  }, [itemList]);
+  }, [isMounted, itemList]);
 
   // Update the scroll behavior
   const scrollToSection = (sectionId) => {
@@ -376,64 +431,37 @@ const [selectedCity, setSelectedCity] = useState(0);
         <HolidayVillage fontSize="auto" className="text-slate-700" />
         <span className="text-slate-800">City Clicker</span>
       </h1>
-      {/* <div>
-        <BearCounter />
-        <Controls />
-      </div> */}
       <Toast
         setShowToast={setShowToast}
         showToast={showToast}
         toastMessage={toastMessage}
       />
       <div>
-        <DragDropContext onDragEnd={handleDrop}>
-          <Droppable droppableId="list-container">
-            {(provided) => (
+        <div className="flex flex-col space-y-2 max-w-[600px] mx-auto interface">
+          {itemList.map((itemName, index) => {
+            const component = dashboardComponents.find(
+              (component) => component.name === itemName
+            );
+            return (
               <div
-                className="flex flex-col space-y-2 max-w-[600px] mx-auto interface" // Add left padding for sidebar
-                {...provided.droppableProps}
-                ref={provided.innerRef}
+                key={itemName}
+                className="item-container"
+                ref={el => sectionRefs.current[itemName] = el}
+                data-section={itemName}
+                id={itemName}
               >
-                {itemList.map((itemName, index) => {
-                  const component = dashboardComponents.find(
-                    (component) => component.name === itemName
-                  );
-                  return (
-                    <Draggable
-                      key={itemName}
-                      draggableId={itemName}
-                      index={index}
-                    >
-                      {(provided) => (
-                        <div
-                          className="item-container"
-                          ref={(el) => {
-                            provided.innerRef(el);
-                            sectionRefs.current[itemName] = el;
-                          }}
-                          data-section={itemName}
-                          id={itemName}
-                          {...provided.draggableProps}
-                        >
-                          <Window
-                            title={itemName}
-                            hideTitle={component.hideTitle}
-                            noPadding={component.noPadding}
-                            provided={provided}
-                          >
-                            {component.component}
-                          </Window>
-                        </div>
-                      )}
-                    </Draggable>
-                  );
-                })}
-                {provided.placeholder}
+                <Window
+                  title={itemName}
+                  icon={component.icon}
+                  hideTitle={component.hideTitle}
+                  noPadding={component.noPadding}
+                >
+                  {component.component}
+                </Window>
               </div>
-            )}
-          </Droppable>
-        </DragDropContext>
-        {/* Toast message - New city notification */}
+            );
+          })}
+        </div>
       </div>
 
       {/* <div className="bottom gap-4 flex">
